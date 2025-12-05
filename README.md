@@ -12,6 +12,7 @@ easier, more organized, and accessible through a clean and interactive applicati
 Application Features 
 
 - Patient Features
+  
 • Login
 • View doctors
 • Book appointments
@@ -20,6 +21,7 @@ Application Features
 • Check payment status
 
 - Doctor Features
+- 
 • Login
 • View assigned patients
 • Create appointments
@@ -28,6 +30,7 @@ Application Features
 • View patient history
 
 - Staff Features
+  
 • Register patients offline
 • Book appointments for walk-in patients
 • Edit patient information
