@@ -1,12 +1,14 @@
-class Doctor():
+from models import person
+class Doctor(person.Person):
     allDoctors = {}
     id_counter = 0
-    
-    def __init__(self, doctor_id = None, name = None, specialty = None, time_slots = None, time_slot_counter = None):
+
+    def __init__(self, doctor_id = None, name = None, specialty = None, time_slots = None, time_slot_counter = None, doctor_age = None):
 
         self.specialty = specialty
         self.doctor_id = doctor_id
         self.name = name
+        self.doctor_age = doctor_age
         self.time_slots = time_slots
         self.time_slot_counter = time_slot_counter
 
@@ -16,6 +18,13 @@ class Doctor():
         self.name = input("Enter doctor's name: ")
         self.specialty = input("Enter doctor's specialty: ")
         self.time_slot_counter = None
+        self.doctor_age = input("Enter doctor's age: ")
+        while not (0 <= self.doctor_age <= 120):
+            try:
+                self.doctor_age = int(input("Enter doctor's age: "))
+            except ValueError:
+                print("Invalid input for doctor's age. Please enter a number between 0 and 120.")
+           
 
         while not isinstance(self.time_slot_counter, int):
             try:
@@ -86,3 +95,24 @@ class Doctor():
                 })
         return result
     
+    def doctor_appointments(self, doctor_name):
+        from models.appointment import Appointment
+        result = []
+        for appointment_id in Appointment.allAppointments:
+            if Appointment.allAppointments[appointment_id]["doctor_name"].lower() == doctor_name.lower():
+                result.append({
+                    "appointment_id": appointment_id,
+                    "patient_name": Appointment.allAppointments[appointment_id]["patient_name"],
+                    "date": Appointment.allAppointments[appointment_id]["date"],
+                    "time": Appointment.allAppointments[appointment_id]["time"]
+                })
+        return result
+    
+    def profile(self):
+        return {
+            "doctor_id": self.doctor_id,
+            "name": self.name,
+            "specialty": self.specialty,
+            "available_time_slots": self.time_slots,
+            "Age": self.doctor_age
+        }
