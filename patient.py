@@ -1,18 +1,18 @@
 from database import Database
-from appointment import Appointment
 from bill import Bill
 
 db = Database()
 
 class Patient:
-    def __init__(self, id, name, age, gender, username, password):
+    def __init__(self, id, name, age, gender, username, password, problem=None, assigned_doctor=None):
         self.id = id
         self.name = name
         self.age = age
         self.gender = gender
         self.username = username
         self.password = password
-        self.problem = None
+        self.problem = problem
+        self.assigned_doctor = assigned_doctor
 
     @staticmethod
     def signup(name, age, gender, username, password):
@@ -25,9 +25,9 @@ class Patient:
     @staticmethod
     def login(username, password):
         record = db.get_patient_by_username(username)
-        if record and record[5] == password:  # password column
+        if record and record[5] == password:
             print("✔ Login successful!")
-            return Patient(record[0], record[1], record[2], record[3], record[4], record[5])
+            return Patient(*record)
         print("❌ Invalid username or password")
         return None
 
@@ -35,14 +35,19 @@ class Patient:
         return db.get_doctors_by_specialty()
 
     def view_doctor_schedule(self, doctor_id):
-        # مثال schedule
+        # يمكن ربطها بجدول حقيقي لاحقًا
         return {"Sunday": ["10:00", "11:00"], "Tuesday": ["12:00", "13:00"]}
 
     def book_appointment(self, doctor_id, day, time, problem):
         self.problem = problem
+        self.assigned_doctor = doctor_id
+        db.execute(
+            "UPDATE Patients SET problem=?, assigned_doctor=? WHERE id=?",
+            (problem, doctor_id, self.id)
+        )
         full_date = f"{day} - {time}"
         appointment_id = db.add_appointment(self.id, doctor_id, full_date, problem)
-        Bill(self.id, appointment_id)  # إنشاء الفاتورة تلقائي
+        Bill(self.id, appointment_id)
         return appointment_id
 
     def view_appointments(self):

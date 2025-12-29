@@ -2,12 +2,11 @@ import sqlite3
 
 class Database:
     def __init__(self):
-        self.conn = sqlite3.connect("hospitalnew1.db")
+        self.conn = sqlite3.connect("hospitalnew5.db")
         self.cursor = self.conn.cursor()
         self.create_tables()
 
     def create_tables(self):
-        # --- Patients ---
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS Patients(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,11 +15,11 @@ class Database:
                 gender TEXT,
                 username TEXT UNIQUE,
                 password TEXT,
-                problem TEXT
+                problem TEXT,
+                assigned_doctor INTEGER
             )
         """)
-
-        # --- Doctors ---
+      
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS Doctors(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +28,6 @@ class Database:
             )
         """)
 
-        # --- Appointments ---
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS Appointments(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,7 +39,6 @@ class Database:
             )
         """)
 
-        # --- Bills ---
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS Bills(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,24 +48,50 @@ class Database:
                 payment_status TEXT
             )
         """)
+        
+
+
+        self.cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Staff(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        age INTEGER,
+        gender TEXT,
+        role TEXT,
+        access_level INTEGER,
+        username TEXT UNIQUE,
+        password TEXT
+    )
+""")
+        
+        self.cursor.execute("""
+    INSERT OR IGNORE INTO Staff (id, name, age, gender, role, access_level, username, password)
+    VALUES (1,'Admin',30,'M','Admin',3,'admin','1234')
+""")
         self.conn.commit()
 
+        
+
     # ===== Patients =====
-    def add_patient(self, name, age, gender, username, password, problem=None):
+    def add_patient(self, name, age, gender, username, password, problem=None, assigned_doctor=None):
         self.cursor.execute("SELECT * FROM Patients WHERE username=?", (username,))
         if self.cursor.fetchone():
             print(f"Username '{username}' already exists!")
             return None
         self.cursor.execute("""
-            INSERT INTO Patients (name, age, gender, username, password, problem)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (name, age, gender, username, password, problem))
+            INSERT INTO Patients (name, age, gender, username, password, problem, assigned_doctor)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (name, age, gender, username, password, problem, assigned_doctor))
         self.conn.commit()
         return self.cursor.lastrowid
 
     def get_patient_by_username(self, username):
         self.cursor.execute("SELECT * FROM Patients WHERE username=?", (username,))
         return self.cursor.fetchone()
+
+    def get_patient_appointments(self, patient_id):
+        self.cursor.execute("SELECT * FROM Appointments WHERE patient_id=?", (patient_id,))
+        return self.cursor.fetchall()
 
     # ===== Doctors =====
     def add_doctor(self, name, specialty):
@@ -91,10 +114,6 @@ class Database:
         """, (patient_id, doctor_id, date, notes))
         self.conn.commit()
         return self.cursor.lastrowid
-
-    def get_patient_appointments(self, patient_id):
-        self.cursor.execute("SELECT * FROM Appointments WHERE patient_id=?", (patient_id,))
-        return self.cursor.fetchall()
 
     def edit_appointment(self, appointment_id, new_date=None, new_notes=None):
         if new_date:
@@ -123,3 +142,26 @@ class Database:
     def get_bill(self, appointment_id):
         self.cursor.execute("SELECT * FROM Bills WHERE appointment_id=?", (appointment_id,))
         return self.cursor.fetchone()
+
+    # ===== Staff / Doctor helper functions =====
+    def get_doctor_patients(self, doctor_id):
+        self.cursor.execute("""
+            SELECT id, name, age, gender, problem 
+            FROM Patients WHERE assigned_doctor=?
+        """, (doctor_id,))
+        return self.cursor.fetchall()
+
+    def fetch(self, query, params=()):
+        self.cursor.execute(query, params)
+        return self.cursor.fetchall()
+
+    def execute(self, query, params=()):
+        self.cursor.execute(query, params)
+        self.conn.commit()
+
+    def delete_patient(self, patient_id):
+        # حذف كل المواعيد والفواتير المرتبطة
+        self.cursor.execute("DELETE FROM Bills WHERE patient_id=?", (patient_id,))
+        self.cursor.execute("DELETE FROM Appointments WHERE patient_id=?", (patient_id,))
+        self.cursor.execute("DELETE FROM Patients WHERE id=?", (patient_id,))
+        self.conn.commit()
