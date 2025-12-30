@@ -3,11 +3,11 @@ from tkinter import *
 count = 0
 def login():
     f_window.destroy()
-    import Login_Window_GUI
+    import Login_Window
 
 def signup():
     f_window.destroy()
-    import Signup_Window_GUI
+    import Signup_Window
 
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
