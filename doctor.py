@@ -23,8 +23,8 @@ class Doctor:
         return None
     
     @staticmethod
-    def log_in(doctor_id):
-        for d in Doctor.get_all_doctors():
+    def login(doctor_id):
+        for d in db.get_doctors_by_specialty():
             if d[0] == doctor_id:
                 print("✔ Login successful!")
                 return Doctor(d[0], d[1], d[2], age=None)
