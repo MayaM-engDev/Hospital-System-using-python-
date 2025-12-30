@@ -47,5 +47,4 @@ signup_button = Button(f_frame,
 signup_button.grid(row=1, column=1, pady=30, padx=30)
 
 
-# display window
 f_window.mainloop()
