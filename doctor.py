@@ -21,7 +21,16 @@ class Doctor:
             print(f"✔ Dr.{name} added successfully with ID {doctor_id}")
             return doctor
         return None
-
+    
+    @staticmethod
+    def log_in(doctor_id):
+        for d in Doctor.get_all_doctors():
+            if d[0] == doctor_id:
+                print("✔ Login successful!")
+                return Doctor(d[0], d[1], d[2], age=None)
+        print("Doctor ID not found.")
+        return None
+    
     @staticmethod
     def get_all_doctors():
         return db.get_doctors_by_specialty()
