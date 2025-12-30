@@ -8,9 +8,6 @@ db = Database()
 
 def main():
 
-  while True:
-        
-
     print("--- Welcome to Hospital System ---")
     user_type = ""
     while user_type not in ["1", "2", "3"]:
@@ -52,7 +49,6 @@ def main():
                 print("Invalid choice!")
         patient_menu(current_user)
 
-
     # ================= Doctor =================
     elif user_type == "2":
         while not current_user:
@@ -77,7 +73,6 @@ def main():
                 print("Invalid choice!")
         doctor_menu(current_user)
 
- 
 # ================= Staff =================
     elif user_type == "3":
      current_user = None
@@ -92,8 +87,6 @@ def main():
             print("Try again!")
 
     staff_menu(current_user)
-
-
 
 # ================= Patient Menu =================
 def patient_menu(patient):
@@ -177,12 +170,16 @@ def doctor_menu(doctor):
         if choice == "1":
             patients = doctor.view_assigned_patients()
             print("\nAssigned Patients:")
+            if not patients:
+                print("No patients assigned.")
             for p in patients:
                 print(f"ID: {p[0]}, Name: {p[1]}, Age: {p[2]}, Gender: {p[3]}, Problem: {p[4]}")
 
         elif choice == "2":
             appointments = doctor.view_appointments()
             print("\nAppointments:")
+            if not appointments:
+                print("No appointments found.")
             for a in appointments:
                 print(f"ID: {a[0]}, Patient ID: {a[1]}, Date: {a[3]}, Notes: {a[4]}, Status: {a[5]}")
 
@@ -214,7 +211,7 @@ def staff_menu(staff):
         print("8) View Paid Bills")
         print("9) View Total Paid Amount")
         print("10) Exit")
-        print("11) Add Appointment") 
+        print("11) Add Appointment")  # <-- الجديد
         choice = input("Enter choice: ")
 
         if choice == "1":

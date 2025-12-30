@@ -10,9 +10,7 @@ class Doctor:
         self.name = name
         self.specialty = specialty
         self.age = age
-        self.time_slots = []
-
-
+       
     @staticmethod
     def age(age):
         try:
@@ -24,7 +22,8 @@ class Doctor:
         while not (0 < age <= 120):
             print("Invalid age. Please enter a number between 0 and 120.")
             age = int(input("Enter age: "))
-
+        return age
+    
     @staticmethod
     def sign_up(name, specialty, age):
         doctor_id = db.add_doctor(name, specialty)
@@ -37,7 +36,7 @@ class Doctor:
     
     @staticmethod
     def login(doctor_id):
-        for d in db.get_doctors_by_specialty():
+        for d in db.get_all_doctors():
             if d[0] == doctor_id:
                 print("✔ Login successful!")
                 return Doctor(d[0], d[1], d[2], age=None)
@@ -64,5 +63,5 @@ class Doctor:
             "name": self.name,
             "specialty": self.specialty,
             "age": self.age,
-            "time_slots": self.time_slots
+           
         }
