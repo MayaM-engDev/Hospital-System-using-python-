@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from GUI_Tools import create_scrollable_tab
 from doctor import Doctor 
 
 bg_color = "#D3D3D3"
@@ -99,14 +100,16 @@ def open_doctor(doctor_id):
     profile_f(current_doctor)
 
     doctor_tabs = ttk.Notebook(doctor_window) 
-
-    patient_list_tab = Frame(doctor_tabs,bg= bg_color,)
-    view_appointment_tab = Frame(doctor_tabs,bg= bg_color)
-
-    doctor_tabs.add(patient_list_tab,text="Assigned Patients List")
-    doctor_tabs.add(view_appointment_tab,text="Appointments")
-    # doctor_tabs.add(bill_tab,text="doctor")
     doctor_tabs.pack(expand=True,fill="both")  
+
+    patient_list_tab = create_scrollable_tab(doctor_tabs,"Assigned Patients List")
+    view_appointment_tab = create_scrollable_tab(doctor_tabs,"Appointments")
+
+    # patient_list_tab = Frame(doctor_tabs,bg= bg_color,)
+    # view_appointment_tab = Frame(doctor_tabs,bg= bg_color)
+
+    # doctor_tabs.add(patient_list_tab,text="Assigned Patients List")
+    # doctor_tabs.add(view_appointment_tab,text="Appointments")
 
     patient_list_f(current_doctor)
     view_f(current_doctor)

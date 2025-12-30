@@ -9,6 +9,7 @@ from doctor import Doctor
 from Doctor_Window import open_doctor
 
 from staff import Staff
+from Staff_Window import open_staff
 
 
 bg_color = "#D3D3D3"
@@ -18,18 +19,19 @@ fg_color = "#0026FF"
 def staff_login(username_entry, password_entry):
     username = username_entry.get()
     password = password_entry.get()
-    # current_patient = Patient.login(username, password)
-    # if current_patient == None:
-    #     messagebox.showerror(title="Login Failed",
-    #                          message="❌ Invalid username or password"
-    #                          )
-    # else:
-    #     messagebox.showinfo(title="Login Success",
-    #                         message="✔ Login successful!"
-    #                         )
-    messagebox.showerror(title="Staff",
-                         message="❌ Staff"
-                        )
+    current_staff = Staff.login(username, password)
+    if current_staff == None:
+        messagebox.showerror(title="Login Failed",
+                             message="❌ Invalid username or password"
+                             )
+    else:
+        messagebox.showinfo(title="Login Success",
+                            message="✔ Login successful!"
+                            )
+        login_window.destroy()
+        open_staff(username,password)
+
+
 def doctor_login(doc_id_entry):
     doctor_id = int(doc_id_entry.get())
     current_user = Doctor.login(doctor_id)
