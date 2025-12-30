@@ -1,18 +1,12 @@
 from tkinter import *
 from tkinter import messagebox
-from patient import Patient
 from tkinter import ttk
+from patient import Patient
+from Paitient_Window import open_patient
 
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
 
-login_window = Tk()
-login_window.title("Log-In Page")
-screen_width = login_window.winfo_screenwidth()
-screen_height = login_window.winfo_screenheight()
-login_window.geometry(f"{screen_width}x{screen_height}+0+0")
-login_window.state("zoomed")
-login_window.configure(bg= bg_color)
 
 def staff_login(username_entry, password_entry):
     username = username_entry.get()
@@ -58,32 +52,11 @@ def patient_login(username_entry, password_entry):
         messagebox.showinfo(title="Login Success",
                             message="✔ Login successful!"
                             )
+        login_window.destroy()
+        open_patient(username,password)
 
-login_tabs = ttk.Notebook(login_window) 
 
-staff_tab = Frame(login_tabs,
-                  bg= bg_color,
-                  )
-doctor_tab = Frame(login_tabs,
-                   bg= bg_color
-                   )
-patient_tab = Frame(login_tabs,
-                   bg= bg_color
-                   )
 
-login_tabs.add(staff_tab,
-               text="Staff",
-               )
-login_tabs.add(doctor_tab,
-               text="Doctor",
-               )
-login_tabs.add(patient_tab,
-               text="Patient",
-               )
-
-login_tabs.pack(expand=True,
-                fill="both"
-               )  
 def page(tab,fun):
     login_frame = Frame(tab,
                     bg=bg_color
@@ -138,9 +111,45 @@ def page(tab,fun):
     
     return username_entry, password_entry
 
+def open_login():
+    global login_window
+    login_window = Tk()
+    login_window.title("Log-In Page")
+    screen_width = login_window.winfo_screenwidth()
+    screen_height = login_window.winfo_screenheight()
+    login_window.geometry(f"{screen_width}x{screen_height}+0+0")
+    login_window.state("zoomed")
+    login_window.configure(bg= bg_color)
 
-page(staff_tab,staff_login)
-page(doctor_tab,doctor_login)
-page(patient_tab,patient_login)
 
-login_window.mainloop()
+    login_tabs = ttk.Notebook(login_window) 
+
+    staff_tab = Frame(login_tabs,
+                    bg= bg_color,
+                    )
+    doctor_tab = Frame(login_tabs,
+                    bg= bg_color
+                    )
+    patient_tab = Frame(login_tabs,
+                    bg= bg_color
+                    )
+
+    login_tabs.add(staff_tab,
+                text="Staff",
+                )
+    login_tabs.add(doctor_tab,
+                text="Doctor",
+                )
+    login_tabs.add(patient_tab,
+                text="Patient",
+                )
+
+    login_tabs.pack(expand=True,
+                    fill="both"
+                )
+    
+    page(staff_tab,staff_login)
+    page(doctor_tab,doctor_login)
+    page(patient_tab,patient_login)
+
+    login_window.mainloop()

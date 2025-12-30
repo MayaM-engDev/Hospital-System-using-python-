@@ -1,13 +1,15 @@
 from tkinter import *
+from Login_Window import open_login
+from Signup_Window import open_signup
 
 count = 0
 def login():
     f_window.destroy()
-    import Login_Window
+    open_login()
 
 def signup():
     f_window.destroy()
-    import Signup_Window
+    open_signup()
 
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"

@@ -2,17 +2,11 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 from patient import Patient
+from Login_Window import open_login
 
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
 
-signup_window = Tk()
-signup_window.title("Sign-Up Page")
-screen_width = signup_window.winfo_screenwidth()
-screen_height = signup_window.winfo_screenheight()
-signup_window.geometry(f"{screen_width}x{screen_height}+0+0")
-signup_window.state("zoomed")
-signup_window.configure(bg= bg_color)
 
 def staff_signup(name_entry, age_entry, gender_entry, username_entry, password_entry):
     name = name_entry.get()
@@ -68,35 +62,8 @@ def patient_signup(name_entry, age_entry, gender_entry, username_entry, password
                             message="✔ signup successful!"
                             )
         signup_window.destroy()
-        import Login_Window_GUI
+        open_login()
         
-
-
-signup_tabs = ttk.Notebook(signup_window) 
-
-staff_tab = Frame(signup_tabs,
-                  bg= bg_color,
-                  )
-doctor_tab = Frame(signup_tabs,
-                   bg= bg_color
-                   )
-patient_tab = Frame(signup_tabs,
-                   bg= bg_color
-                   )
-
-signup_tabs.add(staff_tab,
-               text="Staff",
-               )
-signup_tabs.add(doctor_tab,
-               text="Doctor",
-               )
-signup_tabs.add(patient_tab,
-               text="Patient",
-               )
-
-signup_tabs.pack(expand=True,
-                fill="both"
-               )
   
 def page(tab,fun):
     signup_frame = Frame(tab,
@@ -177,7 +144,7 @@ def page(tab,fun):
 
 
     signup_button = Button(signup_frame,
-                      text="signup",
+                      text="Sign-UP",
                       bg=fg_color,
                       fg="#FFFFFF",
                       font=("times new roman", 25,'bold'),
@@ -188,8 +155,45 @@ def page(tab,fun):
     return name_entry, age_entry, gender_entry, username_entry, password_entry
 
 
-page(staff_tab,staff_signup)
-page(doctor_tab,doctor_signup)
-page(patient_tab,patient_signup)
+def open_signup():
+    global signup_window
+    signup_window = Tk()
+    signup_window.title("Sign-Up Page")
+    screen_width = signup_window.winfo_screenwidth()
+    screen_height = signup_window.winfo_screenheight()
+    signup_window.geometry(f"{screen_width}x{screen_height}+0+0")
+    signup_window.state("zoomed")
+    signup_window.configure(bg= bg_color)
 
-signup_window.mainloop()
+
+    signup_tabs = ttk.Notebook(signup_window) 
+
+    staff_tab = Frame(signup_tabs,
+                    bg= bg_color,
+                    )
+    doctor_tab = Frame(signup_tabs,
+                    bg= bg_color
+                    )
+    patient_tab = Frame(signup_tabs,
+                    bg= bg_color
+                    )
+
+    signup_tabs.add(staff_tab,
+                text="Staff",
+                )
+    signup_tabs.add(doctor_tab,
+                text="Doctor",
+                )
+    signup_tabs.add(patient_tab,
+                text="Patient",
+                )
+
+    signup_tabs.pack(expand=True,
+                    fill="both"
+                )
+
+    page(staff_tab,staff_signup)
+    page(doctor_tab,doctor_signup)
+    page(patient_tab,patient_signup)
+
+    signup_window.mainloop()
