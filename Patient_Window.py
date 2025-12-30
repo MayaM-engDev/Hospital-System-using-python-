@@ -16,9 +16,10 @@ def book(current_patient,doc_id_entry, day_entry, time_entry, problem_entry):
     messagebox.showinfo(title="Book Apointment Success",
                         message=f"✔ Appointment booked with ID: {appointment_id}"
                         )
-    patient_window.destroy()
-    open_patient(current_patient.username,current_patient.password)
-
+    view_appointment_frame.destroy()
+    bill_frame.destroy()
+    view_f(current_patient)
+    bill_f(current_patient)
 
 
 def edit(current_patient,app_id_entry, new_date_entry, new_notes_entry):
@@ -30,8 +31,10 @@ def edit(current_patient,app_id_entry, new_date_entry, new_notes_entry):
     messagebox.showinfo(title="Edit Apointment Success",
                         message="✔ Appointment updated!"
                         )
-    patient_window.destroy()
-    open_patient(current_patient.username,current_patient.password)
+    view_appointment_frame.destroy()
+    bill_frame.destroy()
+    view_f(current_patient)
+    bill_f(current_patient)
     
 
 
@@ -42,8 +45,10 @@ def delete(current_patient,app_idd_entry):
     messagebox.showinfo(title="Delete Apointment Success",
                         message="✔ Appointment Deleted!"
                         )
-    patient_window.destroy()
-    open_patient(current_patient.username,current_patient.password)
+    view_appointment_frame.destroy()
+    bill_frame.destroy()
+    view_f(current_patient)
+    bill_f(current_patient)
     
 def pay(current_patient,app_iddd_entry):
     app_iddd = int(app_iddd_entry.get())
@@ -52,20 +57,11 @@ def pay(current_patient,app_iddd_entry):
     messagebox.showinfo(title="Pay A Bill Success",
                         message=result
                         )
-    patient_window.destroy()
-    open_patient(current_patient.username,current_patient.password)
+    bill_frame.destroy()
+    bill_f(current_patient)
 
-def open_patient(username,password):
-    global patient_window
-    current_patient = Patient.login(username,password)
-    patient_window = Tk()
-    patient_window.title("Patient Page")
-    screen_width = patient_window.winfo_screenwidth()
-    screen_height = patient_window.winfo_screenheight()
-    patient_window.geometry(f"{screen_width}x{screen_height}+0+0")
-    patient_window.state("zoomed")
-    patient_window.configure(bg= bg_color)
 
+def profile_f(current_patient):
     profile_frame = Frame(patient_window,
                           bg=bg_color
                           )
@@ -103,40 +99,11 @@ def open_patient(username,password):
                    )
     gender.grid(row=1, column=1)
 
-
-    patient_tabs = ttk.Notebook(patient_window) 
-
-    doctor_list_tab = Frame(patient_tabs,
-                            bg= bg_color,
-                           )
-
-    view_appointment_tab = Frame(patient_tabs,
-                                 bg= bg_color
-                                )
-    
-    bill_tab = Frame(patient_tabs,
-                     bg= bg_color
-                    )
-
-    patient_tabs.add(doctor_list_tab,
-                     text="Doctors List",
-                    )
-    patient_tabs.add(view_appointment_tab,
-                     text="My Appointment",
-                     )
-    patient_tabs.add(bill_tab,
-                     text="Patient",
-                     )
-
-    patient_tabs.pack(expand=True,
-                      fill="both"
-                     )  
-
-
+def doctor_list_f(current_patient):
     doctor_list_frame = Frame(doctor_list_tab,
                               bg=bg_color
                              )
-    doctor_list_frame.grid(row=0,column=0,sticky='w',padx= 20)
+    doctor_list_frame.grid(row=0,column=0,padx= 20)
 
     doctors = current_patient.view_doctors()
     i = 0
@@ -147,13 +114,14 @@ def open_patient(username,password):
                               fg='red',
                               font=("times new roman", 30,'bold')
                               )
-        patient_label.grid(row=i, column=0, columnspan=2, sticky="ew", pady=40, padx= 20)
+        patient_label.grid(row=i, column=0, pady=20, padx= 20)
         i += 1
 
+def book_f(current_patient):
     book_frame = Frame(doctor_list_tab,
                        bg=bg_color
                       )
-    book_frame.grid(row=0,column=1,sticky='e',padx= 20)
+    book_frame.grid(row=0,column=1,padx= 20)
 
     doc_id_label = Label(book_frame,
                        text="Doctor ID",
@@ -212,7 +180,8 @@ def open_patient(username,password):
                       )
     book_button.grid(row=4, column=0, columnspan=2, pady=30)
 
-
+def view_f(current_patient):
+    global view_appointment_frame
     view_appointment_frame = Frame(view_appointment_tab,
                                    bg=bg_color
                                   )
@@ -227,13 +196,14 @@ def open_patient(username,password):
                               fg='red',
                               font=("times new roman", 10,'bold')
                               )
-        patient_label.grid(row=ii, column=0, columnspan=2, sticky="ew", pady=40, padx= 20)
+        patient_label.grid(row=ii, column=0, pady=40, padx= 20)
         ii += 1
 
+def edit_f(current_patient):
     edit_frame = Frame(view_appointment_tab,
                        bg=bg_color
                       )
-    edit_frame.grid(row=0,column=1,sticky='e',padx= 20)
+    edit_frame.grid(row=0,column=1,padx= 20)
 
     app_id_label = Label(edit_frame,
                        text="Appointment ID",
@@ -280,10 +250,12 @@ def open_patient(username,password):
                       )
     edit_button.grid(row=3, column=0, columnspan=2, pady=30)
 
+
+def delete_f(current_patient):
     delete_frame = Frame(view_appointment_tab,
                          bg=bg_color
                         )
-    delete_frame.grid(row=0,column=2,sticky='e',padx= 20)
+    delete_frame.grid(row=0,column=2,padx= 20)
 
     app_idd_label = Label(delete_frame,
                        text="Appointment ID",
@@ -306,12 +278,15 @@ def open_patient(username,password):
                       )
     delete_button.grid(row=1, column=0, columnspan=2, pady=30)
 
+def bill_f(current_patient):
+    global bill_frame
     bill_frame = Frame(bill_tab,
                        bg=bg_color
                       )
-    bill_frame.grid(row=0,column=0,sticky='w',padx= 20)
+    bill_frame.grid(row=0,column=0,padx= 20)
     
     iii = 0
+    appointments = current_patient.view_appointments()
     for a in appointments:
         bill = current_patient.view_bill(a[0])
         if bill:
@@ -321,13 +296,14 @@ def open_patient(username,password):
                               fg='red',
                               font=("times new roman", 10,'bold')
                               )
-            patient_label.grid(row=ii, column=0, columnspan=2, sticky="ew", pady=40, padx= 20)
-            ii += 1
+            patient_label.grid(row=iii, column=0, pady=40, padx= 20)
+            iii += 1
 
+def pay_f(current_patient):
     pay_frame = Frame(bill_tab,
                       bg=bg_color
                      )
-    pay_frame.grid(row=0,column=1,sticky='e',padx=20)
+    pay_frame.grid(row=0,column=1,padx=20)
 
     app_iddd_label = Label(pay_frame,
                            text="Appointment ID",
@@ -349,6 +325,42 @@ def open_patient(username,password):
                       command=lambda: pay(current_patient,app_iddd_entry)
                       )
     pay_button.grid(row=1, column=0, columnspan=2, pady=30)
+
+
+def open_patient(username,password):
+    global patient_window
+    global doctor_list_tab
+    global view_appointment_tab
+    global bill_tab
+    current_patient = Patient.login(username,password)
+    patient_window = Tk()
+    patient_window.title("Patient Page")
+    screen_width = patient_window.winfo_screenwidth()
+    screen_height = patient_window.winfo_screenheight()
+    patient_window.geometry(f"{screen_width}x{screen_height}+0+0")
+    patient_window.state("zoomed")
+    patient_window.configure(bg= bg_color)
+
+    profile_f(current_patient)
+
+    patient_tabs = ttk.Notebook(patient_window) 
+
+    doctor_list_tab = Frame(patient_tabs,bg= bg_color,)
+    view_appointment_tab = Frame(patient_tabs,bg= bg_color)
+    bill_tab = Frame(patient_tabs,bg= bg_color)
+
+    patient_tabs.add(doctor_list_tab,text="Doctors List")
+    patient_tabs.add(view_appointment_tab,text="My Appointment")
+    patient_tabs.add(bill_tab,text="Patient")
+    patient_tabs.pack(expand=True,fill="both")  
+
+    doctor_list_f(current_patient)
+    book_f(current_patient)
+    view_f(current_patient)
+    edit_f(current_patient)
+    delete_f(current_patient)
+    bill_f(current_patient)
+    pay_f(current_patient)
 
 
     patient_window.mainloop()

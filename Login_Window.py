@@ -1,8 +1,12 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+
 from patient import Patient
-from Paitient_Window import open_patient
+from Patient_Window import open_patient
+
+from doctor import Doctor
+# from Doctor_Window import open_doctor
 
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
@@ -26,19 +30,22 @@ def staff_login(username_entry, password_entry):
 def doctor_login(username_entry, password_entry):
     username = username_entry.get()
     password = password_entry.get()
-    # current_patient = Patient.login(username, password)
-    # if current_patient == None:
-    #     messagebox.showerror(title="Login Failed",
-    #                          message="❌ Invalid username or password"
-    #                          )
-    # else:
-    #     messagebox.showinfo(title="Login Success",
-    #                         message="✔ Login successful!"
-    #                         )
-    messagebox.showerror(title="Doctor",
-                         message="❌ Doctor"
-                        )
-        
+    doctor_id = int(input("Enter your Doctor ID: "))
+    for d in Doctor.get_all_doctors():
+        if d[0] == doctor_id:
+            current_user = Doctor(d[0], d[1], d[2], age=None)
+            messagebox.showinfo(title="Login Success",
+                                message="✔ Login successful!"
+                                )
+            login_window.destroy()
+            # open_doctor(username,password)
+            break
+    if not current_user:
+        print("Doctor ID not found.")
+        messagebox.showerror(title="Login Failed",
+                             message="❌ Invalid username or password"
+                             )
+
 
 def patient_login(username_entry, password_entry):
     username = username_entry.get()
