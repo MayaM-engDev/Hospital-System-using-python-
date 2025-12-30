@@ -14,13 +14,13 @@ def doctor_signup(name_entry, specialty_entry, age_entry):
     specialty = specialty_entry.get()
     age = age_entry.get()
     current_user = Doctor.sign_up(name, specialty, age)
-    if current_user == None:
+    if name == "" or specialty == "" or age == "":
         messagebox.showerror(title="Sign_UP Failed",
                              message="❌ Invalid Data"
                              )
     else:
         messagebox.showinfo(title="Sign_UP Success",
-                            message="✔ signup successful! \n Dr.{current_user.name} added successfully with ID: {current_user.doctor_id}"
+                            message=f"✔ signup successful! \n Dr.{current_user.name} added successfully with ID: {current_user.id}"
                             )
         signup_window.destroy()
         open_login()
@@ -34,13 +34,14 @@ def patient_signup(name_entry, age_entry, gender_entry, username_entry, password
     username = username_entry.get()
     password = password_entry.get()
     current_patient = Patient.signup(name, age, gender, username, password)
-    if current_patient == None:
+    current_patient = Patient.login(username,password) 
+    if name == ""  or age == "" or gender == "" or username == "" or password == "":
         messagebox.showerror(title="Sign_UP Failed",
                              message="❌ Invalid  Data"
                              )
     else:
         messagebox.showinfo(title="Sign_UP Success",
-                            message="✔ Sign_UP successful! \n Dr.{current_patient.name} added successfully with Username: {current_patient.username} "
+                            message=f"✔ Sign_UP successful! \n Dr.{current_patient.name} added successfully with Username: {current_patient.username} "
                             )
         signup_window.destroy()
         open_login()

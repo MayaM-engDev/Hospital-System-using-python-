@@ -6,7 +6,11 @@ from patient import Patient
 from Patient_Window import open_patient
 
 from doctor import Doctor
-# from Doctor_Window import open_doctor
+from Doctor_Window import open_doctor
+
+from staff import Staff
+from Staff_Window import open_staff
+
 
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
@@ -15,37 +19,32 @@ fg_color = "#0026FF"
 def staff_login(username_entry, password_entry):
     username = username_entry.get()
     password = password_entry.get()
-    # current_patient = Patient.login(username, password)
-    # if current_patient == None:
-    #     messagebox.showerror(title="Login Failed",
-    #                          message="❌ Invalid username or password"
-    #                          )
-    # else:
-    #     messagebox.showinfo(title="Login Success",
-    #                         message="✔ Login successful!"
-    #                         )
-    messagebox.showerror(title="Staff",
-                         message="❌ Staff"
-                        )
-def doctor_login(username_entry, password_entry):
-    username = username_entry.get()
-    password = password_entry.get()
-    doctor_id = int(input("Enter your Doctor ID: "))
-    for d in Doctor.get_all_doctors():
-        if d[0] == doctor_id:
-            current_user = Doctor(d[0], d[1], d[2], age=None)
-            messagebox.showinfo(title="Login Success",
-                                message="✔ Login successful!"
-                                )
-            login_window.destroy()
-            # open_doctor(username,password)
-            break
-    if not current_user:
-        print("Doctor ID not found.")
+    current_staff = Staff.login(username, password)
+    if current_staff == None:
         messagebox.showerror(title="Login Failed",
                              message="❌ Invalid username or password"
                              )
+    else:
+        messagebox.showinfo(title="Login Success",
+                            message="✔ Login successful!"
+                            )
+        login_window.destroy()
+        open_staff(username,password)
 
+
+def doctor_login(doc_id_entry):
+    doctor_id = int(doc_id_entry.get())
+    current_user = Doctor.login(doctor_id)
+    if current_user == None:
+        messagebox.showerror(title="Login Failed",
+                             message="❌ Invalid Doctor ID"
+                             )
+    else:
+        messagebox.showinfo(title="Login Success",
+                            message="✔ Login successful!"
+                            )
+        login_window.destroy()
+        open_doctor(doctor_id)
 
 def patient_login(username_entry, password_entry):
     username = username_entry.get()
@@ -62,6 +61,43 @@ def patient_login(username_entry, password_entry):
         login_window.destroy()
         open_patient(username,password)
 
+def doctor_login_f():
+    login_frame = Frame(doctor_tab,
+                    bg=bg_color
+                    )
+    login_frame.place(relx=0.5, rely=0.5, anchor="center")
+
+    login_label = Label(login_frame,
+                    text="Doctor Login",
+                    bg=bg_color,
+                    fg=fg_color,
+                    font=("times new roman", 50,'bold')
+                    )
+    login_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
+
+    doc_id_label = Label(login_frame,
+                       text="Doctor ID",
+                       bg=bg_color,
+                       fg=fg_color,
+                       font=("times new roman", 25,'bold')
+                       )
+    doc_id_label.grid(row=1, column=0)
+
+    doc_id_entry = Entry(login_frame,
+                       font=("times new roman", 25)
+                       )
+    doc_id_entry.grid(row=1, column=1, pady=20)
+
+    login_button = Button(login_frame,
+                      text="Login",
+                      bg=fg_color,
+                      fg="#FFFFFF",
+                      font=("times new roman", 25,'bold'),
+                      command=lambda: doctor_login(doc_id_entry)
+                      )
+    login_button.grid(row=2, column=0, columnspan=2, pady=30)
+    
+    return doc_id_entry
 
 
 def page(tab,fun):
@@ -120,6 +156,7 @@ def page(tab,fun):
 
 def open_login():
     global login_window
+    global doctor_tab
     login_window = Tk()
     login_window.title("Log-In Page")
     screen_width = login_window.winfo_screenwidth()
@@ -156,7 +193,7 @@ def open_login():
                 )
     
     page(staff_tab,staff_login)
-    page(doctor_tab,doctor_login)
+    doctor_login_f()
     page(patient_tab,patient_login)
 
     login_window.mainloop()
