@@ -12,6 +12,19 @@ class Doctor:
         self.age = age
         self.time_slots = []
 
+
+    @staticmethod
+    def age(age):
+        try:
+            age = int(input("Enter age: "))
+        except ValueError:
+            print("Invalid input for age. Please enter a number between 0 and 120.")
+            age = int(input("Enter age: "))
+
+        while not (0 <= age <= 120):
+            print("Invalid age. Please enter a number between 0 and 120.")
+            age = int(input("Enter age: "))
+
     @staticmethod
     def sign_up(name, specialty, age):
         doctor_id = db.add_doctor(name, specialty)
@@ -33,10 +46,10 @@ class Doctor:
     
     @staticmethod
     def get_all_doctors():
-        return db.get_doctors_by_specialty()
+        return db.get_all_doctors()
 
-    def add_time_slot(self, day, time_from, time_to):
-        self.time_slots.append({"day": day, "from": time_from, "to": time_to})
+    # def add_time_slot(self, day, time_from, time_to):
+    #     self.time_slots.append({"day": day, "from": time_from, "to": time_to})
 
     def view_assigned_patients(self):
         return db.get_doctor_patients(self.id)

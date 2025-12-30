@@ -6,7 +6,7 @@ class TestDatabase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # حذف قاعدة البيانات القديمة لو موجودة عشان الاختبارات نظيفة
+      
         if os.path.exists("hospital.db"):
             os.remove("hospital.db")
         cls.db = Database()
@@ -33,7 +33,7 @@ class TestDatabase(unittest.TestCase):
     # ==================== Prescriptions =================
     def test_add_prescription(self):
         self.db.add_prescription(1, 2, "Paracetamol", "500mg", 10.5)
-        # اختبار بسيط: التأكد من وجود وصفة مرتبطة بالمريض والدكتور
+       
         self.db.cursor.execute("SELECT * FROM Prescriptions WHERE patient_id=1 AND doctor_id=2")
         prescription = self.db.cursor.fetchone()
         self.assertIsNotNone(prescription)
@@ -45,7 +45,7 @@ class TestDatabase(unittest.TestCase):
         bill = self.db.get_bill(appointment_id)
         self.assertEqual(bill[3], 50)
         self.assertEqual(bill[4], "pending")
-        # تحديث الحالة
+       
         self.db.update_bill_status(appointment_id, "paid")
         updated_bill = self.db.get_bill(appointment_id)
         self.assertEqual(updated_bill[4], "paid")

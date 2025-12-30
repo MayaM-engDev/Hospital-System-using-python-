@@ -7,10 +7,10 @@ from bill import Bill
 db = Database()
 
 def main():
-<<<<<<< HEAD
-=======
- while True :
->>>>>>> e7cbae2 (edit exit to bring system to home)
+
+  while True:
+        
+
     print("--- Welcome to Hospital System ---")
     user_type = ""
     while user_type not in ["1", "2", "3"]:
@@ -50,10 +50,7 @@ def main():
             else:
                 print("Invalid choice!")
         patient_menu(current_user)
-<<<<<<< HEAD
-=======
-        continue 
->>>>>>> e7cbae2 (edit exit to bring system to home)
+
 
     # ================= Doctor =================
     elif user_type == "2":
@@ -77,12 +74,8 @@ def main():
             else:
                 print("Invalid choice!")
         doctor_menu(current_user)
-<<<<<<< HEAD
-=======
-        continue 
->>>>>>> e7cbae2 (edit exit to bring system to home)
 
-  
+ 
 # ================= Staff =================
     elif user_type == "3":
      current_user = None
@@ -97,10 +90,7 @@ def main():
             print("Try again!")
 
     staff_menu(current_user)
-<<<<<<< HEAD
-=======
-    continue 
->>>>>>> e7cbae2 (edit exit to bring system to home)
+
 
 
 # ================= Patient Menu =================
@@ -222,7 +212,7 @@ def staff_menu(staff):
         print("8) View Paid Bills")
         print("9) View Total Paid Amount")
         print("10) Exit")
-        print("11) Add Appointment")  # <-- الجديد
+        print("11) Add Appointment") 
         choice = input("Enter choice: ")
 
         if choice == "1":

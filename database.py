@@ -99,15 +99,12 @@ class Database:
         self.conn.commit()
         return self.cursor.lastrowid
 
-    def get_doctors_by_specialty(self, specialty=""):
-        if specialty:
-            self.cursor.execute("SELECT * FROM Doctors WHERE specialty LIKE ?", ('%'+specialty+'%',))
-        else:
-            self.cursor.execute("SELECT * FROM Doctors")
+    def get_all_doctors(self):
+        self.cursor.execute("SELECT * FROM Doctors")
         return self.cursor.fetchall()
 
     # ===== Appointments =====
-    def add_appointment(self, patient_id, doctor_id, date, notes):
+    def add_appointment(self, patient_id, doctor_id, date, notes):   
         self.cursor.execute("""
             INSERT INTO Appointments(patient_id, doctor_id, date, notes, payment_status)
             VALUES (?, ?, ?, ?, 'pending')

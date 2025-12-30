@@ -31,12 +31,21 @@ class Patient:
         print("❌ Invalid username or password")
         return None
 
-    def view_doctors(self):
-        return db.get_doctors_by_specialty()
+    @staticmethod
+    def age(age):
+            try:
+                age = int(input("Enter age: "))
+            except ValueError:
+                print("Invalid input for age. Please enter a number between 0 and 120.")
+                age = int(input("Enter age: "))
 
-    def view_doctor_schedule(self, doctor_id):
-        # يمكن ربطها بجدول حقيقي لاحقًا
-        return {"Sunday": ["10:00", "11:00"], "Tuesday": ["12:00", "13:00"]}
+            while not (0 <= age <= 120):
+                print("Invalid age. Please enter a number between 0 and 120.")
+                age = int(input("Enter age: "))
+
+    def view_doctors(self):
+        return db.get_all_doctors()
+    
 
     def book_appointment(self, doctor_id, day, time, problem):
         self.problem = problem
