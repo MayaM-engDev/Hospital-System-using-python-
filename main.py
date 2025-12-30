@@ -38,7 +38,8 @@ def main():
                     print("❌ Invalid credentials, try again.")
             elif choice == "2":
                 name = input("Name: ")
-                age = int(input("Age: "))
+                age = (input("Age: "))
+                Doctor.age(age)
                 gender = input("Gender: ")
                 username = input("Choose username: ")
                 password = input("Choose password: ")
@@ -69,7 +70,8 @@ def main():
             elif choice == "2":
                 name = input("Name: ")
                 specialty = input("Specialty: ")
-                age = int(input("Age: "))
+                age = (input("Age: "))
+                Doctor.age(age)
                 current_user = Doctor.sign_up(name, specialty, age)
             else:
                 print("Invalid choice!")

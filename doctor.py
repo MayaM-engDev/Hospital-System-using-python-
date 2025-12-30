@@ -16,12 +16,12 @@ class Doctor:
     @staticmethod
     def age(age):
         try:
-            age = int(input("Enter age: "))
+            age = int(age)
         except ValueError:
             print("Invalid input for age. Please enter a number between 0 and 120.")
             age = int(input("Enter age: "))
 
-        while not (0 <= age <= 120):
+        while not (0 < age <= 120):
             print("Invalid age. Please enter a number between 0 and 120.")
             age = int(input("Enter age: "))
 
