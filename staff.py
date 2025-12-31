@@ -32,11 +32,11 @@ class Staff:
         return appointment_id
 
     # ===== ADD PATIENT =====
-    def add_patient(self, name, age, gender, problem):
+    def add_patient(self, name, age, gender, problem, assigned_doctor):
         if self.access_level in [1,3]:
             username = f"{name.lower()}{age}"
             password = "defaultpass"
-            self.db.add_patient(name, age, gender, username, password, problem)
+            self.db.add_patient(name, age, gender, username, password, problem, assigned_doctor)
             print(f"✔ Patient {name} added successfully")
         else:
             print("Access denied")
