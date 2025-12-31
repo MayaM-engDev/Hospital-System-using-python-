@@ -2,7 +2,7 @@ import sqlite3
 
 class Database:
     def __init__(self):
-        self.conn = sqlite3.connect("hospitalnew5.db")
+        self.conn = sqlite3.connect("hospitalnew7.db")
         self.cursor = self.conn.cursor()
         self.create_tables()
 
@@ -59,17 +59,23 @@ class Database:
         gender TEXT,
         role TEXT,
         access_level INTEGER,
-        username TEXT UNIQUE,
+        username TEXT,
         password TEXT
     )
 """)
         
         self.cursor.execute("""
-    INSERT OR IGNORE INTO Staff (id, name, age, gender, role, access_level, username, password)
-    VALUES (1,'Admin',30,'M','Admin',3,'admin','1234')
+        INSERT INTO Staff  
+        (name, age, gender, role, access_level, username, password) 
+        VALUES ('Admin',30,'M','Admin',3,'admin','1234')
+""")
+
+        self.cursor.execute("""
+    INSERT INTO Staff  
+(name, age, gender, role, access_level, username, password) 
+VALUES ('casher',30,'M','casher',1,'casher','1234')
 """)
         self.conn.commit()
-
         
 
     # ===== Patients =====
