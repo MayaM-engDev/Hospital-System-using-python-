@@ -10,7 +10,7 @@ The system supports multiple user roles (**Patient**, **Doctor**, and **Staff**)
 ## Group Members
 - Maya Maged — 120230241  
 - Karen Labib — 120230259  
-- Mairoun — 120230136  
+- Mairoun Michel — 120230136  
 - Kirolos Khairy — 120230237  
 
 ---
@@ -298,6 +298,7 @@ Once authentication is completed successfully, the user is redirected based on t
 
 14. The database ensures data persistence and consistency using SQLite,
     allowing the system to store and retrieve information efficiently.
+
 
 
 
