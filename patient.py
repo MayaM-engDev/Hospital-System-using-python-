@@ -63,6 +63,7 @@ class Patient:
         try:
             hour = int(hour)
             minuts = int(minuts)
+            doctor_id = int(doctor_id)
         except ValueError:
             print("Invalid input for hour or Invalid input for minuts.\n Please enter a number between 0 and 23.\nPlease enter a number between 0 and 59.")  
             return None
