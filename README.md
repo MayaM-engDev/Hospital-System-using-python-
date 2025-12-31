@@ -184,7 +184,7 @@ python main.py
 2. Open the project folder.
 3. Run the following command:
 ```bash
-python main.py
+python GUI_main.py
 ```
 ### screenshot
 1. [Program Execution and User Interaction](https://github.com/user-attachments/assets/9f056f99-6165-4e09-806e-41569d81b570)
@@ -311,6 +311,7 @@ Once authentication is completed successfully, the user is redirected based on t
 
 ### documentationdile 
 [hospital system docuemntation.pdf](https://github.com/user-attachments/files/24394381/hospital.system.docuemntation.pdf)
+
 
 
 
