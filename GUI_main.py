@@ -1,55 +1,3 @@
-# from tkinter import *
-# from Login_Window import open_login
-# from Signup_Window import open_signup
-
-# def login():
-#     f_window.destroy() 
-#     open_login()
-
-# def signup():
-#     f_window.destroy()
-#     open_signup()
-
-# bg_color = "#D3D3D3"
-# fg_color = "#0026FF"
-
-# f_window = Tk()
-# f_window.title("Hospital System")
-# screen_width = f_window.winfo_screenwidth()
-# screen_height = f_window.winfo_screenheight()
-# f_window.geometry(f"{screen_width}x{screen_height}+0+0")
-# f_window.state("zoomed")
-# f_window.configure(bg= bg_color)
-
-# f_frame = Frame(f_window,
-#                 bg=bg_color
-#                 )
-# f_frame.place(relx=0.5, rely=0.5, anchor="center")
-
-
-# login_button = Button(f_frame,                 
-#                 text="LOG IN Page",                       
-#                 font=('times new roman',50,'bold'),      
-#                 fg="#ffffff",                        
-#                 bg=fg_color,                           
-#                 command=login
-#                 )
-# login_button.grid(row=1, column=0, pady=30, padx= 30)
-
-# signup_button = Button(f_frame,                 
-#                 text="SIGN UP Page",                       
-#                 font=('times new roman',50,'bold'),      
-#                 fg="#ffffff",                        
-#                 bg=fg_color,                           
-#                 command=signup
-#                 )
-# signup_button.grid(row=1, column=1, pady=30, padx=30)
-
-
-# f_window.mainloop()
-
-
-
 from tkinter import *
 from Login_Window import open_login
 from Signup_Window import open_signup
@@ -63,9 +11,9 @@ def signup():
     open_signup()
 
 # Color Palette
-bg_color = "#F0F2F5"    # Softer light grey
-fg_color = "#0026FF"    # Hospital Blue
-accent_color = "#FFFFFF" # White
+bg_color = "#F0F2F5" 
+fg_color = "#0026FF"
+accent_color = "#FFFFFF" 
 
 f_window = Tk()
 f_window.title("Hospital Management System")
@@ -84,7 +32,6 @@ Label(header_frame,
       pady=30).pack()
 
 # 2. Central Portal Container
-# This creates a "Card" look in the middle of the screen
 main_container = LabelFrame(f_window, 
                             text=" Welcome to the Portal ", 
                             font=("times new roman", 15, "italic"),

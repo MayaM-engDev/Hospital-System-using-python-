@@ -66,60 +66,14 @@ def patient_login(username_entry, password_entry):
         login_window.destroy()
         open_patient(username,password)
 
-# def doctor_login_f():
-#     login_frame = Frame(doctor_tab,
-#                     bg=bg_color
-#                     )
-#     login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-#     login_label = Label(login_frame,
-#                     text="Doctor Login",
-#                     bg=bg_color,
-#                     fg=fg_color,
-#                     font=("times new roman", 50,'bold')
-#                     )
-#     login_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
-
-#     doc_id_label = Label(login_frame,
-#                        text="Doctor ID",
-#                        bg=bg_color,
-#                        fg=fg_color,
-#                        font=("times new roman", 25,'bold')
-#                        )
-#     doc_id_label.grid(row=1, column=0)
-
-#     doc_id_entry = Entry(login_frame,
-#                        font=("times new roman", 25)
-#                        )
-#     doc_id_entry.grid(row=1, column=1, pady=20)
-
-#     login_button = Button(login_frame,
-#                       text="Login",
-#                       bg=fg_color,
-#                       fg="#FFFFFF",
-#                       font=("times new roman", 25,'bold'),
-#                       command=lambda: doctor_login(doc_id_entry)
-#                       )
-#     login_button.grid(row=2, column=0, pady=30)
-
-#     signup_button = Button(login_frame,
-#                       text="Sign UP",
-#                       bg=fg_color,
-#                       fg="#FFFFFF",
-#                       font=("times new roman", 25,'bold'),
-#                       command=signup
-#                       )
-#     signup_button.grid(row=2, column=1, pady=30)
-
-#     return doc_id_entry
 
 def doctor_login_f():
     # 1. Clear any old widgets in the tab to prevent overlapping
     for widget in doctor_tab.winfo_children():
         widget.destroy()
 
-    # 2. Main Container (Card Design)
-    # Using a LabelFrame with a distinct border and internal padding
+    # 2. Main Container 
     login_frame = LabelFrame(doctor_tab, 
                              text=" Security Verification ", 
                              bg=bg_color,
@@ -131,7 +85,6 @@ def doctor_login_f():
     login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
     # 3. Header Icon & Title
-    # Added a simple medical symbol placeholder for a professional look
     Label(login_frame, text="⚕️", font=("serif", 60), bg=bg_color, fg=fg_color).grid(row=0, column=0, columnspan=2)
     
     login_label = Label(login_frame,
@@ -158,11 +111,11 @@ def doctor_login_f():
                          )
     doc_id_entry.grid(row=2, column=1, pady=10, padx=(20, 0))
 
-    # 5. Button Container (Aligns buttons perfectly side-by-side)
+    # 5. Button Container
     btn_frame = Frame(login_frame, bg=bg_color)
     btn_frame.grid(row=3, column=0, columnspan=2, pady=(40, 0))
 
-    # Login Button (Primary Action)
+    # Login Button
     login_btn = Button(btn_frame,
                        text="Login",
                        bg=fg_color,
@@ -175,10 +128,10 @@ def doctor_login_f():
                        )
     login_btn.pack(side=LEFT, padx=10)
 
-    # Sign Up Button (Secondary Action)
+    # Sign Up Button 
     signup_btn = Button(btn_frame,
                         text="Register",
-                        bg="#555555", # Darker grey for secondary action
+                        bg="#555555", 
                         fg="#FFFFFF",
                         width=10,
                         font=("times new roman", 20, 'bold'),
@@ -190,68 +143,6 @@ def doctor_login_f():
 
     return doc_id_entry
 
-# def page(tab,fun,type):
-#     login_frame = Frame(tab,
-#                     bg=bg_color
-#                     )
-#     login_frame.place(relx=0.5, rely=0.5, anchor="center")
-
-#     login_label = Label(login_frame,
-#                     text=f"{type} Login",
-#                     bg=bg_color,
-#                     fg=fg_color,
-#                     font=("times new roman", 50,'bold')
-#                     )
-#     login_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
-
-#     username_label = Label(login_frame,
-#                        text="Username",
-#                        bg=bg_color,
-#                        fg=fg_color,
-#                        font=("times new roman", 25,'bold')
-#                        )
-#     username_label.grid(row=1, column=0)
-
-#     username_entry = Entry(login_frame,
-#                        font=("times new roman", 25)
-#                        )
-#     username_entry.grid(row=1, column=1, pady=20)
-
-#     password_label = Label(login_frame,
-#                        text="Password",
-#                        bg=bg_color,
-#                        fg=fg_color,
-#                        font=("times new roman", 25,'bold')
-#                        )
-#     password_label.grid(row=2, column=0)
-
-#     password_entry = Entry(login_frame,
-#                        show="*",
-#                        font=("times new roman", 25)
-#                        )
-#     password_entry.grid(row=2, column=1, pady=20)
-
-
-
-#     login_button = Button(login_frame,
-#                       text="Login",
-#                       bg=fg_color,
-#                       fg="#FFFFFF",
-#                       font=("times new roman", 25,'bold'),
-#                       command=lambda: fun(username_entry, password_entry)
-#                       )
-#     login_button.grid(row=3, column=0, pady=30)
-    
-#     signup_button = Button(login_frame,
-#                       text="Sign UP",
-#                       bg=fg_color,
-#                       fg="#FFFFFF",
-#                       font=("times new roman", 25,'bold'),
-#                       command=signup
-#                       )
-#     signup_button.grid(row=3, column=1, pady=30)
-
-#     return username_entry, password_entry
 
 def page(tab, fun, type):
     # 1. Clear any existing widgets in the tab
@@ -259,7 +150,6 @@ def page(tab, fun, type):
         widget.destroy()
 
     # 2. Card-style Container
-    # LabelFrame provides the professional border and header title
     login_frame = LabelFrame(tab, 
                              text=f" {type} Portal Access ", 
                              bg=bg_color,
@@ -310,7 +200,7 @@ def page(tab, fun, type):
                            borderwidth=2)
     password_entry.grid(row=2, column=1, pady=10, padx=(20, 0))
 
-    # 5. Button Sub-frame (Perfectly aligned side-by-side)
+    # 5. Button Sub-frame
     btn_frame = Frame(login_frame, bg=bg_color)
     btn_frame.grid(row=3, column=0, columnspan=2, pady=(40, 0))
 
