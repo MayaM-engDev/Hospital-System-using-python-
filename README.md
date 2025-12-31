@@ -173,7 +173,7 @@ Staff_window.py
 2. Open the project folder.
 3. Run the following command:
 ```bash
-python main.py
+python GUI_main.py
 ```
 ### screenshot
 1)Program Execution and User Interaction
@@ -311,6 +311,7 @@ Once authentication is completed successfully, the user is redirected based on t
 
 ### documentationdile 
 [hospital system docuemntation.pdf](https://github.com/user-attachments/files/24394381/hospital.system.docuemntation.pdf)
+
 
 
 
