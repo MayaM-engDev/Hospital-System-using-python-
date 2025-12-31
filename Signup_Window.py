@@ -9,6 +9,10 @@ from Login_Window import open_login
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
 
+def login():
+    signup_window.destroy()
+    from Login_Window import open_login
+    open_login()
 
 def doctor_signup(name_entry, specialty_entry, age_entry):
     name = name_entry.get()
@@ -48,165 +52,270 @@ def patient_signup(name_entry, age_entry, gender_entry, username_entry, password
         open_login()
 
 
+# def doctor_signup_f():
+#     signup_frame = Frame(doctor_tab,
+#                     bg=bg_color
+#                     )
+#     signup_frame.place(relx=0.5, rely=0.5, anchor="center")
+
+#     signup_label = Label(signup_frame,
+#                     text="Doctor Sign Up",
+#                     bg=bg_color,
+#                     fg=fg_color,
+#                     font=("times new roman", 50,'bold')
+#                     )
+#     signup_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
+
+#     name_label = Label(signup_frame,
+#                        text="Name",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     name_label.grid(row=1, column=0)
+#     name_entry = Entry(signup_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     name_entry.grid(row=1, column=1, pady=20)
+
+#     specialty_label = Label(signup_frame,
+#                        text="Specialty",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     specialty_label.grid(row=2, column=0)
+#     specialty_entry = Entry(signup_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     specialty_entry.grid(row=2, column=1, pady=20)
+
+#     age_label = Label(signup_frame,
+#                        text="Age",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     age_label.grid(row=3, column=0)
+#     age_entry = Entry(signup_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     age_entry.grid(row=3, column=1, pady=20)
+
+#     login_button = Button(signup_frame,
+#                       text="Login",
+#                       bg=fg_color,
+#                       fg="#FFFFFF",
+#                       font=("times new roman", 25,'bold'),
+#                       command= login
+#                       )
+#     login_button.grid(row=6, column=0, pady=30)
+
+#     signup_button = Button(signup_frame,
+#                       text="Sign UP",
+#                       bg=fg_color,
+#                       fg="#FFFFFF",
+#                       font=("times new roman", 25,'bold'),
+#                       command=lambda: doctor_signup(name_entry,specialty_entry ,age_entry)
+#                       )
+#     signup_button.grid(row=6, column=1, columnspan=2, pady=30)
+    
+#     return name_entry, specialty_entry ,age_entry
+
 def doctor_signup_f():
-    signup_frame = Frame(doctor_tab,
-                    bg=bg_color
-                    )
+    # Clear the tab for a fresh view
+    for widget in doctor_tab.winfo_children():
+        widget.destroy()
+
+    # Main Container with a border (LabelFrame)
+    signup_frame = LabelFrame(doctor_tab, 
+                              text=" Registration Portal ", 
+                              bg=bg_color,
+                              font=("times new roman", 15, 'italic'),
+                              relief="solid", borderwidth=1, 
+                              padx=40, pady=20)
     signup_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-    signup_label = Label(signup_frame,
-                    text="Doctor Sign Up",
-                    bg=bg_color,
-                    fg=fg_color,
-                    font=("times new roman", 50,'bold')
-                    )
-    signup_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
+    # Header Title
+    Label(signup_frame, text="Doctor Sign Up", bg=bg_color, fg=fg_color,
+          font=("times new roman", 40, 'bold', 'underline')).grid(row=0, column=0, columnspan=2, pady=(10, 40))
 
-    name_label = Label(signup_frame,
-                       text="Name",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    name_label.grid(row=1, column=0)
-    name_entry = Entry(signup_frame,
-                       font=("times new roman", 25)
-                       )
-    name_entry.grid(row=1, column=1, pady=20)
+    # Fields configuration for cleaner code
+    fields = [("Full Name", "name"), ("Specialty", "spec"), ("Age", "age")]
+    entries = {}
 
-    specialty_label = Label(signup_frame,
-                       text="Specialty",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    specialty_label.grid(row=2, column=0)
-    specialty_entry = Entry(signup_frame,
-                       font=("times new roman", 25)
-                       )
-    specialty_entry.grid(row=2, column=1, pady=20)
+    for i, (label_text, key) in enumerate(fields):
+        Label(signup_frame, text=label_text, bg=bg_color, fg="#333333",
+              font=("times new roman", 22, 'bold')).grid(row=i+1, column=0, sticky="w", pady=15)
+        
+        entry = Entry(signup_frame, font=("times new roman", 22), width=25, relief="groove", borderwidth=2)
+        entry.grid(row=i+1, column=1, pady=15, padx=(20, 0))
+        entries[key] = entry
 
-    age_label = Label(signup_frame,
-                       text="Age",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    age_label.grid(row=3, column=0)
-    age_entry = Entry(signup_frame,
-                       font=("times new roman", 25)
-                       )
-    age_entry.grid(row=3, column=1, pady=20)
+    # Button Sub-frame for side-by-side alignment
+    btn_frame = Frame(signup_frame, bg=bg_color)
+    btn_frame.grid(row=4, column=0, columnspan=2, pady=(40, 10))
 
-    signup_button = Button(signup_frame,
-                      text="Sign-UP",
-                      bg=fg_color,
-                      fg="#FFFFFF",
-                      font=("times new roman", 25,'bold'),
-                      command=lambda: doctor_signup(name_entry,specialty_entry ,age_entry)
-                      )
-    signup_button.grid(row=6, column=0, columnspan=2, pady=30)
+    Button(btn_frame, text="Login", bg="#555555", fg="white", width=10,
+           font=("times new roman", 20, 'bold'), cursor="hand2", command=login).pack(side=LEFT, padx=10)
+
+    Button(btn_frame, text="Sign Up", bg=fg_color, fg="white", width=10,
+           font=("times new roman", 20, 'bold'), cursor="hand2",
+           command=lambda: doctor_signup(entries["name"], entries["spec"], entries["age"])).pack(side=LEFT, padx=10)
     
-    return name_entry, specialty_entry ,age_entry
+    return entries["name"], entries["spec"], entries["age"]
 
 
+# def patient_signup_f():
+#     signup_frame = Frame(patient_tab,
+#                     bg=bg_color
+#                     )
+#     signup_frame.place(relx=0.5, rely=0.5, anchor="center")
+
+#     signup_label = Label(signup_frame,
+#                     text="Patient Sign Up",
+#                     bg=bg_color,
+#                     fg=fg_color,
+#                     font=("times new roman", 50,'bold')
+#                     )
+#     signup_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
+
+#     name_label = Label(signup_frame,
+#                        text="Name",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     name_label.grid(row=1, column=0)
+#     name_entry = Entry(signup_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     name_entry.grid(row=1, column=1, pady=20)
+
+#     age_label = Label(signup_frame,
+#                        text="Age",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     age_label.grid(row=2, column=0)
+#     age_entry = Entry(signup_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     age_entry.grid(row=2, column=1, pady=20)
+
+#     gender_label = Label(signup_frame,
+#                        text="Gender",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     gender_label.grid(row=3, column=0)
+#     gender_entry = Entry(signup_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     gender_entry.grid(row=3, column=1, pady=20)
+
+#     username_label = Label(signup_frame,
+#                        text="Username",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     username_label.grid(row=4, column=0)
+#     username_entry = Entry(signup_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     username_entry.grid(row=4, column=1, pady=20)
+
+#     password_label = Label(signup_frame,
+#                        text="Password",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     password_label.grid(row=5, column=0)
+
+#     password_entry = Entry(signup_frame,
+#                        show="*",
+#                        font=("times new roman", 25)
+#                        )
+#     password_entry.grid(row=5, column=1, pady=20)
+
+#     login_button = Button(signup_frame,
+#                       text="Login",
+#                       bg=fg_color,
+#                       fg="#FFFFFF",
+#                       font=("times new roman", 25,'bold'),
+#                       command= login
+#                       )
+#     login_button.grid(row=5, column=0, pady=30)
+
+#     signup_button = Button(signup_frame,
+#                       text="Sign UP",
+#                       bg=fg_color,
+#                       fg="#FFFFFF",
+#                       font=("times new roman", 25,'bold'),
+#                       command=lambda: patient_signup(name_entry, age_entry, gender_entry, username_entry, password_entry)
+#                       )
+#     signup_button.grid(row=6, column=1, columnspan=2, pady=30)
+    
+#     return name_entry, age_entry, gender_entry, username_entry, password_entry
 
 def patient_signup_f():
-    signup_frame = Frame(patient_tab,
-                    bg=bg_color
-                    )
+    # Clear the tab
+    for widget in patient_tab.winfo_children():
+        widget.destroy()
+
+    # Main Container
+    signup_frame = LabelFrame(patient_tab, 
+                              text=" Create New Account ", 
+                              bg=bg_color,
+                              font=("times new roman", 15, 'italic'),
+                              relief="solid", borderwidth=1, 
+                              padx=40, pady=20)
     signup_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-    signup_label = Label(signup_frame,
-                    text="Patient Sign Up",
-                    bg=bg_color,
-                    fg=fg_color,
-                    font=("times new roman", 50,'bold')
-                    )
-    signup_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
+    # Header Title
+    Label(signup_frame, text="Patient Sign Up", bg=bg_color, fg=fg_color,
+          font=("times new roman", 40, 'bold', 'underline')).grid(row=0, column=0, columnspan=2, pady=(10, 40))
 
-    name_label = Label(signup_frame,
-                       text="Name",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    name_label.grid(row=1, column=0)
-    name_entry = Entry(signup_frame,
-                       font=("times new roman", 25)
-                       )
-    name_entry.grid(row=1, column=1, pady=20)
+    # Input mapping
+    fields = [("Full Name", "name"), ("Age", "age"), ("Gender", "gen"), 
+              ("Username", "user"), ("Password", "pass")]
+    entries = {}
 
-    age_label = Label(signup_frame,
-                       text="Age",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    age_label.grid(row=2, column=0)
-    age_entry = Entry(signup_frame,
-                       font=("times new roman", 25)
-                       )
-    age_entry.grid(row=2, column=1, pady=20)
+    for i, (label_text, key) in enumerate(fields):
+        Label(signup_frame, text=label_text, bg=bg_color, fg="#333333",
+              font=("times new roman", 20, 'bold')).grid(row=i+1, column=0, sticky="w", pady=10)
+        
+        # Use show="*" for password field
+        is_pass = "*" if key == "pass" else ""
+        entry = Entry(signup_frame, font=("times new roman", 20), width=30, 
+                      show=is_pass, relief="groove", borderwidth=2)
+        entry.grid(row=i+1, column=1, pady=10, padx=(20, 0))
+        entries[key] = entry
 
-    gender_label = Label(signup_frame,
-                       text="Gender",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    gender_label.grid(row=3, column=0)
-    gender_entry = Entry(signup_frame,
-                       font=("times new roman", 25)
-                       )
-    gender_entry.grid(row=3, column=1, pady=20)
+    # Button sub-frame
+    btn_frame = Frame(signup_frame, bg=bg_color)
+    btn_frame.grid(row=6, column=0, columnspan=2, pady=(30, 10))
 
-    username_label = Label(signup_frame,
-                       text="Username",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    username_label.grid(row=4, column=0)
-    username_entry = Entry(signup_frame,
-                       font=("times new roman", 25)
-                       )
-    username_entry.grid(row=4, column=1, pady=20)
+    Button(btn_frame, text="Login", bg="#555555", fg="white", width=12,
+           font=("times new roman", 18, 'bold'), cursor="hand2", command=login).pack(side=LEFT, padx=10)
 
-    password_label = Label(signup_frame,
-                       text="Password",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    password_label.grid(row=5, column=0)
-
-    password_entry = Entry(signup_frame,
-                       show="*",
-                       font=("times new roman", 25)
-                       )
-    password_entry.grid(row=5, column=1, pady=20)
-
-
-
-    signup_button = Button(signup_frame,
-                      text="Sign-UP",
-                      bg=fg_color,
-                      fg="#FFFFFF",
-                      font=("times new roman", 25,'bold'),
-                      command=lambda: patient_signup(name_entry, age_entry, gender_entry, username_entry, password_entry)
-                      )
-    signup_button.grid(row=6, column=0, columnspan=2, pady=30)
+    Button(btn_frame, text="Sign Up", bg=fg_color, fg="white", width=12,
+           font=("times new roman", 18, 'bold'), cursor="hand2",
+           command=lambda: patient_signup(entries["name"], entries["age"], entries["gen"], 
+                                         entries["user"], entries["pass"])).pack(side=LEFT, padx=10)
     
-    return name_entry, age_entry, gender_entry, username_entry, password_entry
-
+    return entries["name"], entries["age"], entries["gen"], entries["user"], entries["pass"]
 
 def open_signup():
     global signup_window
     global doctor_tab
     global patient_tab
     signup_window = Tk()
-    signup_window.title("Sign-Up Page")
+    signup_window.title("Sign Up Page")
     screen_width = signup_window.winfo_screenwidth()
     screen_height = signup_window.winfo_screenheight()
     signup_window.geometry(f"{screen_width}x{screen_height}+0+0")
