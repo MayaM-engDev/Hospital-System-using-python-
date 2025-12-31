@@ -74,7 +74,7 @@ class Staff:
 
     # ===== VIEW DOCTORS =====
     def view_doctors(self):
-        return self.db.get_doctors_by_specialty()
+        return self.db.get_all_doctors()
 
     # ===== VIEW APPOINTMENTS =====
     def view_appointments(self, patient_id=None):

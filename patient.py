@@ -88,8 +88,24 @@ class Patient:
     def view_appointments(self):
         return db.get_patient_appointments(self.id)
 
-    def edit_appointment(self, appointment_id, new_date=None, new_notes=None):
+    def edit_appointment(self,appointment_id, day, hour, minuts, new_notes):
+        try:
+            hour = int(hour)
+            minuts = int(minuts)
+            appointment_id = int(appointment_id)
+        except ValueError:
+            print("Invalid input for hour or Invalid input for minuts.\n Please enter a number between 0 and 23.\nPlease enter a number between 0 and 59.")  
+            return None
+        if not (0 <= int(hour) <= 23):
+            print("Invalid time entered. Please enter a valid hour (0-23).")
+            return None
+        if not (0 <= int(minuts) <= 59):
+            print("Invalid time entered. Please enter a valid minuts (0-59).")
+            return None
+        time = f"{hour}:{minuts}"
+        new_date = f"{day} - {time}"
         db.edit_appointment(appointment_id, new_date, new_notes)
+        return 1
 
     def delete_appointment(self, appointment_id):
         db.delete_appointment(appointment_id)

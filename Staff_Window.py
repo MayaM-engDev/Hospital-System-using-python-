@@ -106,151 +106,285 @@ def profile_f(current_staff):
                    )
     gender.grid(row=1, column=1)
 
+# def patient_list_f(current_staff):
+#     global patient_list_frame
+#     patient_list_frame = Frame(patient_tab,
+#                               bg=bg_color
+#                              )
+#     patient_list_frame.grid(row=0,column=0,padx= 20)
+
+#     i = 0
+#     patients = current_staff.view_patients()
+#     for p in patients:
+#         staff_label = Label(patient_list_frame,
+#                               text=f"ID: {p[0]} \n Name: {p[1]} \n Age: {p[2]} \n Gender: {p[3]} \n Problem: {p[6]}",
+#                               bg=bg_color,
+#                               fg='red',
+#                               font=("times new roman", 30,'bold')
+#                               )
+#         staff_label.grid(row=i, column=0, pady=20, padx= 20)
+#         i += 1
+
 def patient_list_f(current_staff):
     global patient_list_frame
-    patient_list_frame = Frame(patient_tab,
-                              bg=bg_color
-                             )
-    patient_list_frame.grid(row=0,column=0,padx= 20)
+    # Configure the tab to center content
+    patient_tab.columnconfigure(0, weight=1)
 
-    i = 0
+    # Container Frame
+    patient_list_frame = Frame(patient_tab, bg=bg_color)
+    patient_list_frame.grid(row=0, column=0, pady=20)
+
+    # Table Title
+    Label(patient_list_frame, text="Patient List", bg=bg_color, fg='black', 
+          font=("times new roman", 35, 'bold', 'underline')).grid(row=0, column=0, columnspan=5, pady=(0, 30))
+
+    # Table Headers
+    headers = ["ID", "Name", "Age", "Gender", "Problem"]
+    for col, text in enumerate(headers):
+        header_cell = Label(patient_list_frame, text=text, bg='#d3d3d3', font=("times new roman", 18, 'bold'),
+                             relief="solid", borderwidth=1, width=15)
+        header_cell.grid(row=1, column=col, sticky="nsew")
+
+    # Fetch and Display Data
     patients = current_staff.view_patients()
-    for p in patients:
-        staff_label = Label(patient_list_frame,
-                              text=f"ID: {p[0]} \n Name: {p[1]} \n Age: {p[2]} \n Gender: {p[3]} \n Problem: {p[6]}",
-                              bg=bg_color,
-                              fg='red',
-                              font=("times new roman", 30,'bold')
-                              )
-        staff_label.grid(row=i, column=0, pady=20, padx= 20)
-        i += 1
+    for i, p in enumerate(patients):
+        # i+2 because row 0 is Title and row 1 is Headers
+        # Map: p[0]=ID, p[1]=Name, p[2]=Age, p[3]=Gender, p[6]=Problem
+        data_to_display = [p[0], p[1], p[2], p[3], p[6]]
+        
+        for col, value in enumerate(data_to_display):
+            Label(patient_list_frame, text=value, bg="white", fg='red', 
+                  font=("times new roman", 16), relief="solid", borderwidth=1, 
+                  padx=10, wraplength=200 if col == 4 else None).grid(row=i+2, column=col, sticky="nsew")
+
+# def update_patient_f(current_staff):
+#     update_patient_frame = Frame(patient_tab,
+#                                  bg=bg_color
+#                                 )
+#     update_patient_frame.grid(row=1,column=0,padx= 20)
+    
+#     patient_id_label = Label(update_patient_frame,
+#                        text="Patient ID",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     patient_id_label.grid(row=0, column=0)
+#     patient_id_entry = Entry(update_patient_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     patient_id_entry.grid(row=0, column=1, pady=20)
+
+#     new_name_label = Label(update_patient_frame,
+#                        text="New Name",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     new_name_label.grid(row=1, column=0)
+#     new_name_entry = Entry(update_patient_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     new_name_entry.grid(row=1, column=1, pady=20)
+
+#     new_age_label = Label(update_patient_frame,
+#                        text="New Age",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     new_age_label.grid(row=2, column=0)
+#     new_age_entry = Entry(update_patient_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     new_age_entry.grid(row=2, column=1, pady=20)
+
+#     new_gender_label = Label(update_patient_frame,
+#                        text="New Gender",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     new_gender_label.grid(row=3, column=0)
+#     new_gender_entry = Entry(update_patient_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     new_gender_entry.grid(row=3, column=1, pady=20)
+
+#     new_problem_label = Label(update_patient_frame,
+#                        text="New Problem",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     new_problem_label.grid(row=4, column=0)
+#     new_problem_entry = Entry(update_patient_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     new_problem_entry.grid(row=4, column=1, pady=20)
+
+#     update_patient_button = Button(update_patient_frame,
+#                       text="Update",
+#                       bg=fg_color,
+#                       fg="#FFFFFF",
+#                       font=("times new roman", 25,'bold'),
+#                       command=lambda: update(current_staff,patient_id_entry, new_name_entry, new_age_entry,new_gender_entry,new_problem_entry)
+#                       )
+#     update_patient_button.grid(row=5, column=0, columnspan=2, pady=30)
+
+# def delete_f(current_staff):
+#     delete_frame = Frame(patient_tab,
+#                          bg=bg_color
+#                         )
+#     delete_frame.grid(row=1,column=1,padx= 20)
+
+#     patient_idd_label = Label(delete_frame,
+#                        text="Patient ID",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     patient_idd_label.grid(row=0, column=0)
+#     patient_idd_entry = Entry(delete_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     patient_idd_entry.grid(row=0, column=1, pady=20)
+
+#     delete_button = Button(delete_frame,
+#                       text="Delete",
+#                       bg=fg_color,
+#                       fg="#FFFFFF",
+#                       font=("times new roman", 25,'bold'),
+#                       command=lambda: delete(current_staff,patient_idd_entry)
+#                       )
+#     delete_button.grid(row=1, column=0, columnspan=2, pady=30)
 
 def update_patient_f(current_staff):
-    update_patient_frame = Frame(patient_tab,
-                                 bg=bg_color
-                                )
-    update_patient_frame.grid(row=0,column=1,padx= 20)
+    # 2. Section Title
+    Label(patient_tab, text="Update Patient Information", bg=bg_color, fg='black', 
+          font=("times new roman", 30, 'bold', 'underline')).grid(row=1, column=0, pady=(40, 10))
+
+    # 3. Update LabelFrame
+    update_patient_frame = LabelFrame(patient_tab, text=" Edit Patient Details ", 
+                                      bg=bg_color, font=("times new roman", 15, 'italic'),
+                                      relief="solid", borderwidth=1, padx=30, pady=20)
+    update_patient_frame.grid(row=2, column=0, padx=20, pady=10)
     
-    patient_id_label = Label(update_patient_frame,
-                       text="Patient ID",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    patient_id_label.grid(row=0, column=0)
-    patient_id_entry = Entry(update_patient_frame,
-                       font=("times new roman", 25)
-                       )
-    patient_id_entry.grid(row=0, column=1, pady=20)
+    # Input Fields
+    labels = ["Patient ID", "New Name", "New Age", "New Gender", "New Problem"]
+    entries = []
 
-    new_name_label = Label(update_patient_frame,
-                       text="New Name",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    new_name_label.grid(row=1, column=0)
-    new_name_entry = Entry(update_patient_frame,
-                       font=("times new roman", 25)
-                       )
-    new_name_entry.grid(row=1, column=1, pady=20)
+    for i, label_text in enumerate(labels):
+        Label(update_patient_frame, text=label_text, bg=bg_color, fg=fg_color, 
+              font=("times new roman", 22, 'bold')).grid(row=i, column=0, sticky="w", pady=10)
+        
+        entry = Entry(update_patient_frame, font=("times new roman", 22), width=30)
+        entry.grid(row=i, column=1, pady=10, padx=10)
+        entries.append(entry)
 
-    new_age_label = Label(update_patient_frame,
-                       text="New Age",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    new_age_label.grid(row=2, column=0)
-    new_age_entry = Entry(update_patient_frame,
-                       font=("times new roman", 25)
-                       )
-    new_age_entry.grid(row=2, column=1, pady=20)
+    # Extracting entries for the command
+    p_id, p_name, p_age, p_gender, p_prob = entries
 
-    new_gender_label = Label(update_patient_frame,
-                       text="New Gender",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    new_gender_label.grid(row=3, column=0)
-    new_gender_entry = Entry(update_patient_frame,
-                       font=("times new roman", 25)
-                       )
-    new_gender_entry.grid(row=3, column=1, pady=20)
+    # Update Button
+    update_button = Button(update_patient_frame, text="Update Patient", bg=fg_color, fg="#FFFFFF",
+                           font=("times new roman", 22, 'bold'), cursor="hand2",
+                           command=lambda: update(current_staff, p_id, p_name, p_age, p_gender, p_prob))
+    update_button.grid(row=5, column=0, columnspan=2, pady=20)
 
-    new_problem_label = Label(update_patient_frame,
-                       text="New Problem",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    new_problem_label.grid(row=4, column=0)
-    new_problem_entry = Entry(update_patient_frame,
-                       font=("times new roman", 25)
-                       )
-    new_problem_entry.grid(row=4, column=1, pady=20)
-
-    update_patient_button = Button(update_patient_frame,
-                      text="Update",
-                      bg=fg_color,
-                      fg="#FFFFFF",
-                      font=("times new roman", 25,'bold'),
-                      command=lambda: update(current_staff,patient_id_entry, new_name_entry, new_age_entry,new_gender_entry,new_problem_entry)
-                      )
-    update_patient_button.grid(row=5, column=0, columnspan=2, pady=30)
 
 def delete_f(current_staff):
-    delete_frame = Frame(patient_tab,
-                         bg=bg_color
-                        )
-    delete_frame.grid(row=0,column=2,padx= 20)
+    # 1. Section Title
+    Label(patient_tab, text="Delete Patient", bg=bg_color, fg='black', 
+          font=("times new roman", 30, 'bold', 'underline')).grid(row=3, column=0, pady=(40, 10))
 
-    patient_idd_label = Label(delete_frame,
-                       text="Patient ID",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    patient_idd_label.grid(row=0, column=0)
-    patient_idd_entry = Entry(delete_frame,
-                       font=("times new roman", 25)
-                       )
-    patient_idd_entry.grid(row=0, column=1, pady=20)
+    # 2. Delete LabelFrame
+    delete_frame = LabelFrame(patient_tab, text=" Danger Zone ", 
+                              bg=bg_color, fg="red", font=("times new roman", 15, 'italic'),
+                              relief="solid", borderwidth=1, padx=30, pady=20)
+    delete_frame.grid(row=4, column=0, padx=20, pady=20)
 
-    delete_button = Button(delete_frame,
-                      text="Delete",
-                      bg=fg_color,
-                      fg="#FFFFFF",
-                      font=("times new roman", 25,'bold'),
-                      command=lambda: delete(current_staff,patient_idd_entry)
-                      )
-    delete_button.grid(row=1, column=0, columnspan=2, pady=30)
+    # Patient ID Input
+    Label(delete_frame, text="Patient ID", bg=bg_color, fg=fg_color, 
+          font=("times new roman", 22, 'bold')).grid(row=0, column=0, sticky="w", pady=10)
+    
+    patient_idd_entry = Entry(delete_frame, font=("times new roman", 22), width=30)
+    patient_idd_entry.grid(row=0, column=1, pady=10, padx=10)
+
+    # Delete Button
+    delete_button = Button(delete_frame, text="Delete Patient Record", bg="#cc0000", fg="#FFFFFF",
+                           font=("times new roman", 22, 'bold'), cursor="hand2",
+                           command=lambda: delete(current_staff, patient_idd_entry))
+    delete_button.grid(row=1, column=0, columnspan=2, pady=20)
+
+
+# def doctor_list_f(current_staff):
+#     doctor_list_frame = Frame(doctor_tab,
+#                                    bg=bg_color
+#                                   )
+#     doctor_list_frame.grid(row=0,column=0,sticky='w',padx= 20)
+
+#     ii = 0
+#     doctors = current_staff.view_doctors()
+#     for d in doctors:
+#         doctor_label = Label(doctor_list_frame,
+#                               text=f"ID: {d[0]} \n Name: {d[1]} \n Specialty: {d[2]}\n",
+#                               bg=bg_color,
+#                               fg='red',
+#                               font=("times new roman", 10,'bold')
+#                               )
+#         doctor_label.grid(row=ii, column=0, pady=40, padx= 20)
+#         ii += 1
+
 
 def doctor_list_f(current_staff):
-    doctor_list_frame = Frame(doctor_tab,
-                                   bg=bg_color
-                                  )
-    doctor_list_frame.grid(row=0,column=0,sticky='w',padx= 20)
+    # 2. Main Container Frame
+    doctor_list_frame = Frame(doctor_tab, bg=bg_color)
+    doctor_list_frame.grid(row=0, column=0, pady=20)
 
-    ii = 0
+    # 3. Table Title
+    Label(doctor_list_frame, 
+          text="Doctor List", 
+          bg=bg_color, 
+          fg='black', 
+          font=("times new roman", 35, 'bold', 'underline')).grid(row=0, column=0, columnspan=3, pady=(0, 30))
+
+    # 4. Table Headers
+    headers = ["Doctor ID", "Doctor Name", "Specialty"]
+    for col_index, header_text in enumerate(headers):
+        header_cell = Label(doctor_list_frame, 
+                             text=header_text, 
+                             bg='#d3d3d3', 
+                             fg='black', 
+                             font=("times new roman", 18, 'bold'),
+                             relief="solid", 
+                             borderwidth=1, 
+                             width=20)
+        header_cell.grid(row=1, column=col_index, sticky="nsew")
+
+    # 5. Fetch and Display Doctors
     doctors = current_staff.view_doctors()
-    for d in doctors:
-        doctor_label = Label(doctor_list_frame,
-                              text=f"ID: {d[0]} \n Name: {d[1]} \n Specialty: {d[2]}\n",
-                              bg=bg_color,
-                              fg='red',
-                              font=("times new roman", 10,'bold')
-                              )
-        doctor_label.grid(row=ii, column=0, pady=40, padx= 20)
-        ii += 1
+    
+    for i, d in enumerate(doctors):
+        # Row index starts at 2 (Row 0=Title, Row 1=Headers)
+        
+        # ID Cell
+        Label(doctor_list_frame, text=d[0], bg="white", fg='red', 
+              font=("times new roman", 16), relief="solid", borderwidth=1).grid(row=i+2, column=0, sticky="nsew")
+        
+        # Name Cell
+        Label(doctor_list_frame, text=d[1], bg="white", fg='red', 
+              font=("times new roman", 16), relief="solid", borderwidth=1, padx=10).grid(row=i+2, column=1, sticky="nsew")
+        
+        # Specialty Cell
+        Label(doctor_list_frame, text=d[2], bg="white", fg='red', 
+              font=("times new roman", 16), relief="solid", borderwidth=1, padx=10).grid(row=i+2, column=2, sticky="nsew")
 
 
 def book_f(current_staff):
     book_frame = Frame(doctor_tab,
                        bg=bg_color
                       )
-    book_frame.grid(row=0,column=1,padx= 20)
+    book_frame.grid(row=1,column=0,padx= 20)
 
     patient_id_label = Label(book_frame,
                        text="Patient ID",
@@ -309,113 +443,318 @@ def book_f(current_staff):
                       )
     book_button.grid(row=4, column=0, columnspan=2, pady=30)
 
+
+
+# def view_f(current_staff):
+#     view_frame = Frame(appointment_tab,
+#                          bg=bg_color
+#                         )
+#     view_frame.grid(row=0,column=0,padx= 20)
+
+#     patient_iddd_label = Label(view_frame,
+#                        text="Patient ID",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     patient_iddd_label.grid(row=0, column=0)
+#     patient_iddd_entry = Entry(view_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     patient_iddd_entry.grid(row=0, column=1, pady=20)
+
+#     view_button = Button(view_frame,
+#                       text="View Appointment",
+#                       bg=fg_color,
+#                       fg="#FFFFFF",
+#                       font=("times new roman", 25,'bold'),
+#                       command=lambda: view(current_staff,patient_iddd_entry)
+#                       )
+#     view_button.grid(row=1, column=0, columnspan=2, pady=30)
+
+
 def view_f(current_staff):
-    view_frame = Frame(appointment_tab,
-                         bg=bg_color
-                        )
-    view_frame.grid(row=0,column=0,padx= 20)
 
+    # 2. Main Title for the Section
+    title_label = Label(appointment_tab, 
+                        text="View Appointments", 
+                        bg=bg_color, 
+                        fg='black', 
+                        font=("times new roman", 35, 'bold', 'underline'))
+    title_label.grid(row=1, column=0, pady=(40, 10))
+
+    # 3. Create the Framed Container (LabelFrame)
+    view_frame = LabelFrame(appointment_tab,
+                            text=" Search Patient Records ",
+                            bg=bg_color,
+                            font=("times new roman", 15, 'italic'),
+                            padx=30, pady=30,
+                            relief="solid",
+                            borderwidth=1)
+    # Row 2 to place it below the Title
+    view_frame.grid(row=2, column=0, padx=20, pady=20)
+
+    # 4. Input Fields inside the frame
     patient_iddd_label = Label(view_frame,
-                       text="Patient ID",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    patient_iddd_label.grid(row=0, column=0)
-    patient_iddd_entry = Entry(view_frame,
-                       font=("times new roman", 25)
-                       )
-    patient_iddd_entry.grid(row=0, column=1, pady=20)
+                               text="Patient ID",
+                               bg=bg_color,
+                               fg=fg_color,
+                               font=("times new roman", 25, 'bold'))
+    patient_iddd_label.grid(row=0, column=0, sticky="w", pady=10)
 
+    patient_iddd_entry = Entry(view_frame,
+                               font=("times new roman", 25),
+                               width=25)
+    patient_iddd_entry.grid(row=0, column=1, pady=20, padx=10)
+
+    # 5. Search Button
     view_button = Button(view_frame,
-                      text="View Appointment",
-                      bg=fg_color,
-                      fg="#FFFFFF",
-                      font=("times new roman", 25,'bold'),
-                      command=lambda: view(current_staff,patient_iddd_entry)
-                      )
+                         text="Search Appointments",
+                         bg=fg_color,
+                         fg="#FFFFFF",
+                         font=("times new roman", 25, 'bold'),
+                         cursor="hand2",
+                         command=lambda: view(current_staff, patient_iddd_entry))
     view_button.grid(row=1, column=0, columnspan=2, pady=30)
 
-def appointment_list_f(current_staff,pid):
-    global appointment_list_frame
-    appointment_list_frame = Frame(appointment_tab,
-                                   bg=bg_color
-                                  )
-    appointment_list_frame.grid(row=0,column=1,sticky='w',padx= 20)
+# def appointment_list_f(current_staff,pid):
+#     global appointment_list_frame
+#     appointment_list_frame = Frame(appointment_tab,
+#                                    bg=bg_color
+#                                   )
+#     appointment_list_frame.grid(row=0,column=1,sticky='w',padx= 20)
 
-    iii = 0
+#     iii = 0
+#     appointments = current_staff.view_appointments(pid)
+#     for a in appointments:
+#         appointment_label = Label(appointment_list_frame,
+#                               text=f"ID: {a[0]} \n Doctor ID: {a[2]} \n Date: {a[3]} \n Notes: {a[4]} \n Status: {a[5]}\n",
+#                               bg=bg_color,
+#                               fg='red',
+#                               font=("times new roman", 10,'bold')
+#                               )
+#         appointment_label.grid(row=iii, column=0, pady=40, padx= 20)
+#         iii += 1
+
+def appointment_list_f(current_staff, pid):
+    global appointment_list_frame
+
+    # 2. Main Container Frame
+    appointment_list_frame = Frame(appointment_tab, bg=bg_color)
+    appointment_list_frame.grid(row=0, column=0, pady=20)
+
+    # 3. Dynamic Title using Patient ID
+    Label(appointment_list_frame, 
+          text=f"Patient {pid} Appointments", 
+          bg=bg_color, 
+          fg='black', 
+          font=("times new roman", 35, 'bold', 'underline')).grid(row=0, column=0, columnspan=5, pady=(0, 30))
+
+    # 4. Table Headers
+    headers = ["Appointment ID", "Doctor ID", "Date", "Notes", "Status"]
+    for col_index, header_text in enumerate(headers):
+        header_cell = Label(appointment_list_frame, 
+                             text=header_text, 
+                             bg='#d3d3d3', 
+                             fg='black', 
+                             font=("times new roman", 18, 'bold'),
+                             relief="solid", 
+                             borderwidth=1, 
+                             width=15)
+        header_cell.grid(row=1, column=col_index, sticky="nsew")
+
+    # 5. Fetch and Display Data
     appointments = current_staff.view_appointments(pid)
-    for a in appointments:
-        appointment_label = Label(appointment_list_frame,
-                              text=f"ID: {a[0]} \n Doctor ID: {a[2]} \n Date: {a[3]} \n Notes: {a[4]} \n Status: {a[5]}\n",
-                              bg=bg_color,
-                              fg='red',
-                              font=("times new roman", 10,'bold')
-                              )
-        appointment_label.grid(row=iii, column=0, pady=40, padx= 20)
-        iii += 1
+    
+    for i, a in enumerate(appointments):
+        # We start at row i+2 (Row 0=Title, Row 1=Headers)
+        # Mapping: a[0]=ID, a[2]=DocID, a[3]=Date, a[4]=Notes, a[5]=Status
+        
+        # Appointment ID
+        Label(appointment_list_frame, text=a[0], bg="white", fg='red', 
+              font=("times new roman", 16), relief="solid", borderwidth=1).grid(row=i+2, column=0, sticky="nsew")
+        
+        # Doctor ID
+        Label(appointment_list_frame, text=a[2], bg="white", fg='red', 
+              font=("times new roman", 16), relief="solid", borderwidth=1).grid(row=i+2, column=1, sticky="nsew")
+        
+        # Date
+        Label(appointment_list_frame, text=a[3], bg="white", fg='red', 
+              font=("times new roman", 16), relief="solid", borderwidth=1).grid(row=i+2, column=2, sticky="nsew")
+              
+        # Notes
+        Label(appointment_list_frame, text=a[4], bg="white", fg='red', 
+              font=("times new roman", 16), relief="solid", borderwidth=1, padx=10, wraplength=200).grid(row=i+2, column=3, sticky="nsew")
+              
+        # Status
+        Label(appointment_list_frame, text=a[5], bg="white", fg='red', 
+              font=("times new roman", 16, 'bold'), relief="solid", borderwidth=1).grid(row=i+2, column=4, sticky="nsew")
+
+# def bill_f(current_staff):
+#     global bill_frame
+#     bill_frame = Frame(bill_tab,
+#                        bg=bg_color
+#                       )
+#     bill_frame.grid(row=0,column=0,padx= 20)
+    
+#     iiii = 0
+#     bills = current_staff.view_all_bills()
+#     for b in bills:
+#         bill_label = Label(bill_frame,
+#                               text=f"Bill ID: {b['bill_id']}, Appointment ID: {b['appointment_id']} \n Patient ID: {b['patient_id']}, Patient Name: {b['patient_name']} \n Appointment Date: {b['appointment_date']}, Total: {b['total_cost']}, Status: {b['payment_status']}\n",
+#                               bg=bg_color,
+#                               fg='red',
+#                               font=("times new roman", 10,'bold')
+#                               )
+#         bill_label.grid(row=iiii, column=0, pady=40, padx= 20)
+#         iiii += 1
+
+# def paid_bill_f(current_staff):
+#     global paid_bill_frame
+#     paid_bill_frame = Frame(bill_tab,
+#                        bg=bg_color
+#                       )
+#     paid_bill_frame.grid(row=1,column=0,padx= 20)
+    
+#     iiiii = 0
+#     paid_bills = current_staff.view_paid_bills()
+#     for b in paid_bills:
+#         paid_bill_label = Label(paid_bill_frame,
+#                               text=f"paid_bill ID: {b['paid_bill_id']}, Appointment ID: {b['appointment_id']} \n Patient ID: {b['patient_id']}, Patient Name: {b['patient_name']} \n Appointment Date: {b['appointment_date']}, Total: {b['total_cost']}, Status: {b['payment_status']}\n",
+#                               bg=bg_color,
+#                               fg='red',
+#                               font=("times new roman", 10,'bold')
+#                               )
+#         paid_bill_label.grid(row=iiiii, column=0, pady=40, padx= 20)
+#         iiiii += 1
+
+
+from tkinter import *
 
 def bill_f(current_staff):
     global bill_frame
-    bill_frame = Frame(bill_tab,
-                       bg=bg_color
-                      )
-    bill_frame.grid(row=0,column=0,padx= 20)
-    
-    iiii = 0
+    # Configure tab for centering
+    bill_tab.columnconfigure(0, weight=1)
+
+    # Container Frame
+    bill_frame = Frame(bill_tab, bg=bg_color)
+    bill_frame.grid(row=0, column=0, pady=20)
+
+    # Table Title
+    Label(bill_frame, text="All Bills", bg=bg_color, fg='black', 
+          font=("times new roman", 30, 'bold', 'underline')).grid(row=0, column=0, columnspan=7, pady=(0, 20))
+
+    # Table Headers
+    headers = ["Bill ID", "Appointmentt ID", "Patient ID", "Name", "Date", "Total", "Status"]
+    for col, text in enumerate(headers):
+        Label(bill_frame, text=text, bg='#d3d3d3', font=("times new roman", 14, 'bold'),
+              relief="solid", borderwidth=1, width=12).grid(row=1, column=col, sticky="nsew")
+
+    # Data Rows
     bills = current_staff.view_all_bills()
-    for b in bills:
-        bill_label = Label(bill_frame,
-                              text=f"Bill ID: {b['bill_id']}, Appointment ID: {b['appointment_id']} \n Patient ID: {b['patient_id']}, Patient Name: {b['patient_name']} \n Appointment Date: {b['appointment_date']}, Total: {b['total_cost']}, Status: {b['payment_status']}\n",
-                              bg=bg_color,
-                              fg='red',
-                              font=("times new roman", 10,'bold')
-                              )
-        bill_label.grid(row=iiii, column=0, pady=40, padx= 20)
-        iiii += 1
+    for i, b in enumerate(bills):
+        # Mapping dictionary keys to a list for the loop
+        row_data = [b['bill_id'], b['appointment_id'], b['patient_id'], b['patient_name'], 
+                    b['appointment_date'], f"${b['total_cost']}", b['payment_status']]
+        
+        for col, value in enumerate(row_data):
+            fg_color_data = 'green' if str(value).lower() == 'paid' else 'red'
+            Label(bill_frame, text=value, bg="white", fg=fg_color_data if col == 6 else 'black',
+                  font=("times new roman", 12), relief="solid", borderwidth=1, padx=5).grid(row=i+2, column=col, sticky="nsew")
+
 
 def paid_bill_f(current_staff):
     global paid_bill_frame
-    paid_bill_frame = Frame(bill_tab,
-                       bg=bg_color
-                      )
-    paid_bill_frame.grid(row=0,column=1,padx= 20)
-    
-    iiiii = 0
+    # Container Frame (Placed below the first table)
+    paid_bill_frame = Frame(bill_tab, bg=bg_color)
+    paid_bill_frame.grid(row=1, column=0, pady=40)
+
+    # Table Title
+    Label(paid_bill_frame, text="Paid Bills History", bg=bg_color, fg='black', 
+          font=("times new roman", 30, 'bold', 'underline')).grid(row=0, column=0, columnspan=7, pady=(0, 20))
+
+    # Table Headers
+    headers = ["Paid ID", "Appointment ID", "Patient ID", "Name", "Date", "Total", "Status"]
+    for col, text in enumerate(headers):
+        Label(paid_bill_frame, text=text, bg='#d3d3d3', font=("times new roman", 14, 'bold'),
+              relief="solid", borderwidth=1, width=12).grid(row=1, column=col, sticky="nsew")
+
+    # Data Rows
     paid_bills = current_staff.view_paid_bills()
-    for b in paid_bills:
-        paid_bill_label = Label(paid_bill_frame,
-                              text=f"paid_bill ID: {b['paid_bill_id']}, Appointment ID: {b['appointment_id']} \n Patient ID: {b['patient_id']}, Patient Name: {b['patient_name']} \n Appointment Date: {b['appointment_date']}, Total: {b['total_cost']}, Status: {b['payment_status']}\n",
-                              bg=bg_color,
-                              fg='red',
-                              font=("times new roman", 10,'bold')
-                              )
-        paid_bill_label.grid(row=iiiii, column=0, pady=40, padx= 20)
-        iiiii += 1
+    for i, b in enumerate(paid_bills):
+        # Note: mapping 'paid_bill_id' as per your original logic
+        row_data = [b['bill_id'], b['appointment_id'], b['patient_id'], b['patient_name'], 
+                    b['appointment_date'], f"${b['total_cost']}", b['payment_status']]
+        
+        for col, value in enumerate(row_data):
+            Label(paid_bill_frame, text=value, bg="white", fg='green',
+                  font=("times new roman", 12), relief="solid", borderwidth=1, padx=5).grid(row=i+2, column=col, sticky="nsew")
+
+
+# def total_paid_f(current_staff):
+#     global total_paid_frame
+#     total_paid_frame = Frame(bill_tab,
+#                        bg=bg_color
+#                       )
+#     total_paid_frame.grid(row=2,column=0,padx= 20)
+    
+#     total_paid = current_staff.total_paid_amount()
+#     total_paid_label = Label(total_paid_frame,
+#                               text="Total Paid Amount",
+#                               bg=bg_color,
+#                               fg='Blue',
+#                               font=("times new roman", 20,'bold')
+#                               )
+#     total_paid_label.grid(row=0, column=0, pady=40, padx= 20)
+
+#     amount_label = Label(total_paid_frame,
+#                               text=total_paid,
+#                               bg=bg_color,
+#                               fg='black',
+#                               font=("times new roman", 20)
+#                               )
+#     amount_label.grid(row=0, column=1, pady=40, padx= 20)
+
+
+from tkinter import *
 
 def total_paid_f(current_staff):
     global total_paid_frame
-    total_paid_frame = Frame(bill_tab,
-                       bg=bg_color
-                      )
-    total_paid_frame.grid(row=0,column=2,padx= 20)
-    
-    total_paid = current_staff.total_paid_amount()
-    total_paid_label = Label(total_paid_frame,
-                              text="Total Paid Amount",
-                              bg=bg_color,
-                              fg='Blue',
-                              font=("times new roman", 20,'bold')
-                              )
-    total_paid_label.grid(row=0, column=0, pady=40, padx= 20)
 
+    # Create a LabelFrame to act as the "Total" box
+    total_paid_frame = LabelFrame(bill_tab, 
+                                  text=" Financial Summary ", 
+                                  bg=bg_color, 
+                                  font=("times new roman", 15, 'italic'),
+                                  relief="solid", 
+                                  borderwidth=2, 
+                                  padx=50, 
+                                  pady=20)
+    # Placed at row 2, below the two tables
+    total_paid_frame.grid(row=2, column=0, pady=40, padx=20)
+    
+    # Fetch the total amount
+    total_paid = current_staff.total_paid_amount()
+
+    # Label for description
+    total_paid_label = Label(total_paid_frame,
+                             text="Grand Total Paid Amount:",
+                             bg=bg_color,
+                             fg='Blue',
+                             font=("times new roman", 22, 'bold')
+                             )
+    total_paid_label.grid(row=0, column=0, pady=10, padx=10)
+
+    # Label for the actual numerical value
+    # Added a currency symbol and formatting for a professional look
     amount_label = Label(total_paid_frame,
-                              text=total_paid,
-                              bg=bg_color,
-                              fg='black',
-                              font=("times new roman", 20)
-                              )
-    amount_label.grid(row=0, column=1, pady=40, padx= 20)
+                         text=f"${total_paid:,.2f}",
+                         bg=bg_color,
+                         fg='black',
+                         font=("times new roman", 22, 'bold')
+                         )
+    amount_label.grid(row=0, column=1, pady=10, padx=10)
+
 
 def open_staff(username,password):
     global staff_window

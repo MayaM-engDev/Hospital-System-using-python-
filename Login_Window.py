@@ -100,14 +100,14 @@ def doctor_login_f():
     return doc_id_entry
 
 
-def page(tab,fun):
+def page(tab,fun,type):
     login_frame = Frame(tab,
                     bg=bg_color
                     )
     login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
     login_label = Label(login_frame,
-                    text="Login",
+                    text=f"{type} Login",
                     bg=bg_color,
                     fg=fg_color,
                     font=("times new roman", 50,'bold')
@@ -192,8 +192,8 @@ def open_login():
                     fill="both"
                 )
     
-    page(staff_tab,staff_login)
+    page(staff_tab,staff_login, 'Staff')
     doctor_login_f()
-    page(patient_tab,patient_login)
+    page(patient_tab,patient_login, 'Patient')
 
     login_window.mainloop()
