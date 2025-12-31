@@ -309,6 +309,11 @@ Once authentication is completed successfully, the user is redirected based on t
 ![GUI3](https://github.com/user-attachments/assets/887938e3-00f1-4d14-9b89-d15d2ee9beca)
 
 
+### documentationdile 
+[hospital system docuemntation.pdf](https://github.com/user-attachments/files/24394381/hospital.system.docuemntation.pdf)
+
+
+
 
 
 
