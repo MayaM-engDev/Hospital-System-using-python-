@@ -246,6 +246,9 @@ Once authentication is completed successfully, the user is redirected based on t
 
 4. Each action is handled by the corresponding patient-related function
    (such as `view_doctors()`, `book_appointment()`, and `pay_bill()`).
+   <img width="1024" height="1536" alt="patient flow" src="https://github.com/user-attachments/assets/2b45e0b7-83a9-42ff-9886-aea92677f82e" />
+   
+
 
 ---
 
@@ -266,6 +269,7 @@ Once authentication is completed successfully, the user is redirected based on t
 
 8. These actions are managed through doctor-specific functions
    (such as `view_assigned_patients()` and `view_appointments()`).
+<img width="1024" height="1536" alt="Doctor flow" src="https://github.com/user-attachments/assets/a25f3c32-0fa0-4751-8918-1ef581c6dada" />
 
 ---
 
@@ -288,6 +292,7 @@ Once authentication is completed successfully, the user is redirected based on t
 
 12. Staff actions are handled using staff-related functions
     (such as `add_patient()`, `update_patient()`, and `view_all_bills()`).
+<img width="1024" height="1536" alt="staff flow" src="https://github.com/user-attachments/assets/07912e23-91e6-4459-9130-a26a1d9dcc78" />
 
 ---
 
@@ -298,6 +303,7 @@ Once authentication is completed successfully, the user is redirected based on t
 
 14. The database ensures data persistence and consistency using SQLite,
     allowing the system to store and retrieve information efficiently.
+
 
 
 
