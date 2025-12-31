@@ -6,7 +6,10 @@ from doctor import Doctor
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
 
-
+def signout():
+    doctor_window.destroy()
+    from Login_Window import open_login
+    open_login()
 
 def profile_f(current_doctor):
     # Main container
@@ -35,6 +38,9 @@ def profile_f(current_doctor):
 
     Label(profile_frame, text="SPECIALTY:", bg=bg_color, fg=label_color, font=label_font).grid(row=1, column=2, sticky="e", padx=5, pady=10)
     Label(profile_frame, text=current_doctor.specialty, bg=bg_color, fg=val_color, font=value_font).grid(row=1, column=3, sticky="w", padx=5, pady=10)
+
+    Button(profile_frame, text="Sign OUT", bg="#555555", fg="white", width=10,
+           font=("times new roman", 20, 'bold'), cursor="hand2", command=signout).grid(row=0, column=4, rowspan= 2, padx=5, pady=10)
 
 
 def patient_list_f(current_doctor):

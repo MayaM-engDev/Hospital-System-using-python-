@@ -7,6 +7,11 @@ from staff import Staff
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
 
+def signout():
+    staff_window.destroy()
+    from Login_Window import open_login
+    open_login()
+
 def update(current_staff,patient_id_entry, new_name_entry, new_age_entry,new_gender_entry,new_problem_entry):
     pid = int(patient_id_entry.get())
     name = new_name_entry.get()
@@ -108,6 +113,10 @@ def profile_f(current_staff):
     # Gender
     Label(profile_frame, text="GENDER:", bg=bg_color, fg=label_color, font=label_font).grid(row=1, column=2, sticky="e", padx=10, pady=15)
     Label(profile_frame, text=current_staff.gender, bg=bg_color, fg=val_color, font=value_font).grid(row=1, column=3, sticky="w", padx=10, pady=15)
+
+
+    Button(profile_frame, text="Sign OUT", bg="#555555", fg="white", width=10,
+           font=("times new roman", 20, 'bold'), cursor="hand2", command=signout).grid(row=0, column=4, rowspan= 2, padx=5, pady=10)
 
 
 def patient_list_f(current_staff):

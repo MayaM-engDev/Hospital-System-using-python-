@@ -7,6 +7,11 @@ from patient import Patient
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
 
+def signout():
+    patient_window.destroy()
+    from Login_Window import open_login
+    open_login()
+
 def book(current_patient, doc_id_entry, day_listbox , hour_entry, min_entry, problem_entry):
     doc_id = doc_id_entry.get()
     selected_day = day_listbox.curselection()
@@ -118,6 +123,9 @@ def profile_f(current_patient):
     
     gender_val = Label(profile_frame, text=current_patient.gender, bg=bg_color, fg=data_color, font=value_font)
     gender_val.grid(row=1, column=3, sticky="w", padx=5, pady=10)
+
+    Button(profile_frame, text="Sign OUT", bg="#555555", fg="white", width=10,
+           font=("times new roman", 20, 'bold'), cursor="hand2", command=signout).grid(row=0, column=4, rowspan= 2, padx=5, pady=10)
 
 def doctor_list_f(current_patient):
 
