@@ -99,12 +99,15 @@ class Database:
         self.conn.commit()
         return self.cursor.lastrowid
 
-    def get_all_doctors(self):
-        self.cursor.execute("SELECT * FROM Doctors")
+    def get_all_doctors(self, specialty=""):
+        if specialty:
+            self.cursor.execute("SELECT * FROM Doctors WHERE specialty LIKE ?", ('%'+specialty+'%',))
+        else:
+            self.cursor.execute("SELECT * FROM Doctors")
         return self.cursor.fetchall()
 
     # ===== Appointments =====
-    def add_appointment(self, patient_id, doctor_id, date, notes):   
+    def add_appointment(self, patient_id, doctor_id, date, notes):
         self.cursor.execute("""
             INSERT INTO Appointments(patient_id, doctor_id, date, notes, payment_status)
             VALUES (?, ?, ?, ?, 'pending')
@@ -119,7 +122,13 @@ class Database:
             self.cursor.execute("UPDATE Appointments SET notes=? WHERE id=?", (new_notes, appointment_id))
         self.conn.commit()
 
+    
+
     def delete_appointment(self, appointment_id):
+        appointment= self.db.execute("SELECT id FROM Appointments WHERE id=?", (appointment_id,), fetchone=True)
+        if not appointment:
+            print("❌ appointment not found")
+            return
         self.cursor.execute("DELETE FROM Bills WHERE appointment_id=?", (appointment_id,))
         self.cursor.execute("DELETE FROM Appointments WHERE id=?", (appointment_id,))
         self.conn.commit()
@@ -162,3 +171,5 @@ class Database:
         self.cursor.execute("DELETE FROM Appointments WHERE patient_id=?", (patient_id,))
         self.cursor.execute("DELETE FROM Patients WHERE id=?", (patient_id,))
         self.conn.commit()
+
+    
