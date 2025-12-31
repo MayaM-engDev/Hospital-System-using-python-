@@ -124,14 +124,22 @@ class Database:
 
     
 
+   
+    
     def delete_appointment(self, appointment_id):
-        appointment= self.db.execute("SELECT id FROM Appointments WHERE id=?", (appointment_id,), fetchone=True)
+        appointment = self.execute(
+        "SELECT id FROM Appointments WHERE id=?",
+        (appointment_id,),
+        fetchone=True ) 
+
         if not appointment:
-            print("❌ appointment not found")
-            return
-        self.cursor.execute("DELETE FROM Bills WHERE appointment_id=?", (appointment_id,))
-        self.cursor.execute("DELETE FROM Appointments WHERE id=?", (appointment_id,))
-        self.conn.commit()
+          print("❌ Appointment not found")
+          return
+        else :
+          self.execute("DELETE FROM Bills WHERE appointment_id=?", (appointment_id,))
+          self.execute("DELETE FROM Appointments WHERE id=?", (appointment_id,))
+
+          print("✔ Appointment deleted successfully")
 
     # ===== Bills =====
     def add_bill(self, appointment_id, patient_id, total_cost=100):
@@ -161,12 +169,18 @@ class Database:
         self.cursor.execute(query, params)
         return self.cursor.fetchall()
 
-    def execute(self, query, params=()):
-        self.cursor.execute(query, params)
-        self.conn.commit()
+ 
+
+    def execute(self, query, params=(), fetchone=False, fetchall=False):
+       self.cursor.execute(query, params)
+       if fetchone:
+        return self.cursor.fetchone()
+       if fetchall:
+        return self.cursor.fetchall()
+       self.conn.commit()
 
     def delete_patient(self, patient_id):
-        # حذف كل المواعيد والفواتير المرتبطة
+        
         self.cursor.execute("DELETE FROM Bills WHERE patient_id=?", (patient_id,))
         self.cursor.execute("DELETE FROM Appointments WHERE patient_id=?", (patient_id,))
         self.cursor.execute("DELETE FROM Patients WHERE id=?", (patient_id,))
