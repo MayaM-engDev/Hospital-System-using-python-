@@ -24,11 +24,30 @@ class Staff:
             return None
         
     # ===== ADD APPOINTMENT =====
-    def add_appointment(self, patient_id, doctor_id, date, notes=""):
+    def add_appointment(self, patient_id, doctor_id, day, hour, minute, notes=""):
         if self.access_level not in [2, 3]:
             print("Access denied")
-            return
-        appointment_id = self.db.add_appointment(patient_id, doctor_id, date, notes)
+            return None 
+        try:
+            hour = int(hour)
+            minute = int(minute)
+            doctor_id = int(doctor_id)
+        except ValueError:
+            print("Invalid input for hour or Invalid input for minutes.\n Please enter a number between 0 and 23.\nPlease enter a number between 0 and 59.")  
+            return None
+        if not (0 <= int(hour) <= 23):
+            print("Invalid time entered. Please enter a valid hour (0-23).")
+            return None
+        if not (0 <= int(minute) <= 59):
+            print("Invalid time entered. Please enter a valid minutes (0-59).")
+            return None
+        formatted_date = f"{day} - {hour}:{minute}"
+        db.execute(
+            "UPDATE Patients SET problem=?, assigned_doctor=? WHERE id=?",
+            (notes, doctor_id, patient_id)
+        )
+        appointment_id = self.db.add_appointment(patient_id, doctor_id, formatted_date, notes)
+        Bill(patient_id, appointment_id)
         print(f"✔ Appointment added with ID: {appointment_id}")
         return appointment_id
 

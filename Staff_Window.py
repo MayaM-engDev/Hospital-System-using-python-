@@ -42,16 +42,43 @@ def delete(current_staff,patient_idd_entry):
     paid_bill_f(current_staff)
     total_paid_f(current_staff)
 
-def book(current_staff,patient_id_entry ,doc_id_entry, date_entry, note_entry):
-    patient_id = int(patient_id_entry.get())
-    doctor_id = int(doc_id_entry.get())
-    date = date_entry.get()
-    notes = note_entry.get()
-    appointment_id = current_staff.add_appointment(patient_id, doctor_id, date, notes)
+# def book(current_staff,patient_id_entry ,doc_id_entry, date_entry, note_entry):
+#     patient_id = int(patient_id_entry.get())
+#     doctor_id = int(doc_id_entry.get())
+#     date = date_entry.get()
+#     notes = note_entry.get()
+#     appointment_id = current_staff.add_appointment(patient_id, doctor_id, date, notes)
 
-    messagebox.showinfo(title="Book Apointment Success",
-                        message=f"✔ Appointment booked with ID: {appointment_id}"
-                        )
+#     messagebox.showinfo(title="Book Apointment Success",
+#                         message=f"✔ Appointment booked with ID: {appointment_id}"
+#                         )
+#     patient_list_frame.destroy()
+#     bill_frame.destroy()
+#     paid_bill_frame.destroy()
+#     total_paid_frame.destroy()
+#     patient_list_f(current_staff)
+#     bill_f(current_staff)
+#     paid_bill_f(current_staff)
+#     total_paid_f(current_staff)
+
+def book(current_staff, patient_id_entry ,doc_id_entry, day_listbox , hour_entry, min_entry, note_entry):
+    patient_id = patient_id_entry.get()
+    doc_id = doc_id_entry.get()
+    selected_day = day_listbox.curselection()
+    day = day_listbox.get(selected_day[0])
+    hour = hour_entry.get()
+    min = min_entry.get()
+    notes = note_entry.get() 
+    appointment_id = current_staff.add_appointment(patient_id,doc_id, day, hour, min, notes)
+    if appointment_id == None:
+        messagebox.showerror(title="Book Apointment Failed",
+                             message="❌ Invalid Data"
+                             )
+    else:
+        print(f"✔ Appointment booked with ID: {appointment_id}")
+        messagebox.showinfo(title="Book Apointment Success",
+                            message=f"✔ Appointment booked with ID: {appointment_id}"
+                            )
     patient_list_frame.destroy()
     bill_frame.destroy()
     paid_bill_frame.destroy()
@@ -61,50 +88,87 @@ def book(current_staff,patient_id_entry ,doc_id_entry, date_entry, note_entry):
     paid_bill_f(current_staff)
     total_paid_f(current_staff)
 
+
+
+
 def view(current_staff,patient_iddd_entry):
      appointment_list_frame.destroy()
      appointment_list_f(current_staff,int(patient_iddd_entry.get()))
 
 
 
+# def profile_f(current_staff):
+#     profile_frame = Frame(staff_window,
+#                           bg=bg_color
+#                           )
+#     profile_frame.pack()
+
+
+#     name = Label(profile_frame,
+#                  text=f"Name: {current_staff.name}",
+#                  bg=bg_color,
+#                  fg=fg_color,
+#                  font=("times new roman", 50,'bold')
+#                  )
+#     name.grid(row=0, column=0)
+
+#     id = Label(profile_frame,
+#                text=f"ID: {current_staff.id}",
+#                bg=bg_color,
+#                fg=fg_color,
+#                font=("times new roman", 50,'bold')
+#                )
+#     id.grid(row=0, column=1)
+
+#     role = Label(profile_frame,
+#                 text=f"Role: {current_staff.role}",
+#                 bg=bg_color,
+#                 fg=fg_color,
+#                 font=("times new roman", 50,'bold')
+#                 )
+#     role.grid(row=1, column=0)
+
+#     gender = Label(profile_frame,
+#                    text=f"Gender: {current_staff.gender}",
+#                    bg=bg_color,
+#                    fg=fg_color,
+#                    font=("times new roman", 50,'bold')
+#                    )
+#     gender.grid(row=1, column=1)
+
+
 def profile_f(current_staff):
-    profile_frame = Frame(staff_window,
-                          bg=bg_color
-                          )
-    profile_frame.pack()
+    # Main container frame
+    profile_frame = Frame(staff_window, bg=bg_color)
+    profile_frame.pack(pady=25, padx=20, fill="x")
 
+    # Styling - Amber/Orange color for general staff members
+    val_color = "#0026FF"  # You can change this to any hex color
+    label_color = "#000000"
+    label_font = ("times new roman", 30, "bold")
+    value_font = ("times new roman", 25)
 
-    name = Label(profile_frame,
-                 text=f"Name: {current_staff.name}",
-                 bg=bg_color,
-                 fg=fg_color,
-                 font=("times new roman", 50,'bold')
-                 )
-    name.grid(row=0, column=0)
+    # Configure 4 columns to be equal width for perfect alignment
+    profile_frame.columnconfigure((0, 1, 2, 3), weight=1)
 
-    id = Label(profile_frame,
-               text=f"ID: {current_staff.id}",
-               bg=bg_color,
-               fg=fg_color,
-               font=("times new roman", 50,'bold')
-               )
-    id.grid(row=0, column=1)
+    # --- ROW 1: Name and ID ---
+    # Staff Name
+    Label(profile_frame, text="STAFF NAME:", bg=bg_color, fg=label_color, font=label_font).grid(row=0, column=0, sticky="e", padx=10, pady=15)
+    Label(profile_frame, text=current_staff.name, bg=bg_color, fg=val_color, font=value_font).grid(row=0, column=1, sticky="w", padx=10, pady=15)
 
-    role = Label(profile_frame,
-                text=f"Role: {current_staff.role}",
-                bg=bg_color,
-                fg=fg_color,
-                font=("times new roman", 50,'bold')
-                )
-    role.grid(row=1, column=0)
+    # Staff ID
+    Label(profile_frame, text="EMPLOYEE ID:", bg=bg_color, fg=label_color, font=label_font).grid(row=0, column=2, sticky="e", padx=10, pady=15)
+    Label(profile_frame, text=f"#{current_staff.id}", bg=bg_color, fg=val_color, font=value_font).grid(row=0, column=3, sticky="w", padx=10, pady=15)
 
-    gender = Label(profile_frame,
-                   text=f"Gender: {current_staff.gender}",
-                   bg=bg_color,
-                   fg=fg_color,
-                   font=("times new roman", 50,'bold')
-                   )
-    gender.grid(row=1, column=1)
+    # --- ROW 2: Role and Gender ---
+    # Role
+    Label(profile_frame, text="ROLE:", bg=bg_color, fg=label_color, font=label_font).grid(row=1, column=0, sticky="e", padx=10, pady=15)
+    Label(profile_frame, text=current_staff.role.upper(), bg=bg_color, fg=val_color, font=value_font).grid(row=1, column=1, sticky="w", padx=10, pady=15)
+
+    # Gender
+    Label(profile_frame, text="GENDER:", bg=bg_color, fg=label_color, font=label_font).grid(row=1, column=2, sticky="e", padx=10, pady=15)
+    Label(profile_frame, text=current_staff.gender, bg=bg_color, fg=val_color, font=value_font).grid(row=1, column=3, sticky="w", padx=10, pady=15)
+
 
 # def patient_list_f(current_staff):
 #     global patient_list_frame
@@ -380,69 +444,154 @@ def doctor_list_f(current_staff):
               font=("times new roman", 16), relief="solid", borderwidth=1, padx=10).grid(row=i+2, column=2, sticky="nsew")
 
 
+# def book_f(current_staff):
+#     book_frame = Frame(doctor_tab,
+#                        bg=bg_color
+#                       )
+#     book_frame.grid(row=1,column=0,padx= 20)
+
+#     patient_id_label = Label(book_frame,
+#                        text="Patient ID",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     patient_id_label.grid(row=0, column=0)
+#     patient_id_entry = Entry(book_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     patient_id_entry.grid(row=0, column=1, pady=20)
+
+#     doc_id_label = Label(book_frame,
+#                        text="Doctor ID",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     doc_id_label.grid(row=1, column=0)
+#     doc_id_entry = Entry(book_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     doc_id_entry.grid(row=1, column=1, pady=20)
+
+#     date_label = Label(book_frame,
+#                        text="Date",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     date_label.grid(row=2, column=0)
+#     date_entry = Entry(book_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     date_entry.grid(row=2, column=1, pady=20)
+
+#     note_label = Label(book_frame,
+#                        text="Notes",
+#                        bg=bg_color,
+#                        fg=fg_color,
+#                        font=("times new roman", 25,'bold')
+#                        )
+#     note_label.grid(row=3, column=0)
+#     note_entry = Entry(book_frame,
+#                        font=("times new roman", 25)
+#                        )
+#     note_entry.grid(row=3, column=1, pady=20)
+
+#     book_button = Button(book_frame,
+#                       text="Book Appointment",
+#                       bg=fg_color,
+#                       fg="#FFFFFF",
+#                       font=("times new roman", 25,'bold'),
+#                       command=lambda: book(current_staff,patient_id_entry ,doc_id_entry, date_entry, note_entry)
+#                       )
+#     book_button.grid(row=4, column=0, columnspan=2, pady=30)
+
+
 def book_f(current_staff):
-    book_frame = Frame(doctor_tab,
-                       bg=bg_color
-                      )
-    book_frame.grid(row=1,column=0,padx= 20)
 
-    patient_id_label = Label(book_frame,
-                       text="Patient ID",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    patient_id_label.grid(row=0, column=0)
-    patient_id_entry = Entry(book_frame,
-                       font=("times new roman", 25)
-                       )
-    patient_id_entry.grid(row=0, column=1, pady=20)
+    # 2. Main Title
+    title_label = Label(doctor_tab, 
+                        text="Book An Appointment", 
+                        bg=bg_color, fg='black', 
+                        font=("times new roman", 35, 'bold', 'underline'))
+    title_label.grid(row=1, column=0, pady=(40, 10))
 
-    doc_id_label = Label(book_frame,
-                       text="Doctor ID",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    doc_id_label.grid(row=1, column=0)
-    doc_id_entry = Entry(book_frame,
-                       font=("times new roman", 25)
-                       )
-    doc_id_entry.grid(row=1, column=1, pady=20)
+    # 3. LabelFrame
+    book_frame = LabelFrame(doctor_tab,
+                            text=" Appointment Details ", 
+                            bg=bg_color,
+                            font=("times new roman", 15, 'italic'),
+                            padx=30, pady=30,
+                            relief="solid", borderwidth=1)
+    book_frame.grid(row=2, column=0, padx=20, pady=20)
 
-    date_label = Label(book_frame,
-                       text="Date",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    date_label.grid(row=2, column=0)
-    date_entry = Entry(book_frame,
-                       font=("times new roman", 25)
-                       )
-    date_entry.grid(row=2, column=1, pady=20)
+    Label(book_frame, text="Patient ID", bg=bg_color, fg=fg_color, 
+          font=("times new roman", 22, 'bold')).grid(row=0, column=0, sticky="w", pady=10)
+    patient_id_entry = Entry(book_frame, font=("times new roman", 22), width=45)
+    patient_id_entry.grid(row=0, column=1, columnspan=3, pady=10, padx=10)
 
-    note_label = Label(book_frame,
-                       text="Notes",
-                       bg=bg_color,
-                       fg=fg_color,
-                       font=("times new roman", 25,'bold')
-                       )
-    note_label.grid(row=3, column=0)
-    note_entry = Entry(book_frame,
-                       font=("times new roman", 25)
-                       )
-    note_entry.grid(row=3, column=1, pady=20)
+    Label(book_frame, text="Doctor ID", bg=bg_color, fg=fg_color, 
+          font=("times new roman", 22, 'bold')).grid(row=1, column=0, sticky="w", pady=10)
+    doc_id_entry = Entry(book_frame, font=("times new roman", 22), width=45)
+    doc_id_entry.grid(row=1, column=1, columnspan=3, pady=10, padx=10)
 
+    # Day Listbox
+    Label(book_frame, text="Day", bg=bg_color, fg=fg_color, 
+          font=("times new roman", 22, 'bold')).grid(row=2, column=0, sticky="nw", pady=10)
+    
+    day_frame = Frame(book_frame, bg=bg_color)
+    day_frame.grid(row=2, column=1, columnspan=3, pady=10, padx=10, sticky="w")
+    
+    day_scrollbar = Scrollbar(day_frame, orient=VERTICAL)
+    # Changed height to 4 so it doesn't take over the whole screen
+    day_listbox = Listbox(day_frame, font=("times new roman", 20), 
+                          height=2, width=45, selectmode=SINGLE, 
+                          yscrollcommand=day_scrollbar.set)
+    day_scrollbar.config(command=day_listbox.yview)
+    
+    day_listbox.pack(side=LEFT)
+    day_scrollbar.pack(side=RIGHT, fill=Y)
+
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    for day in days:
+        day_listbox.insert(END, day)
+
+    # Time (Hour : Min)
+    Label(book_frame, text="Time", bg=bg_color, fg=fg_color, 
+          font=("times new roman", 22, 'bold')).grid(row=3, column=0, sticky="w", pady=10)
+    
+    # Using a sub-frame for time to keep ":" centered between entries
+    time_container = Frame(book_frame, bg=bg_color)
+    time_container.grid(row=3, column=1, columnspan=3, sticky="w")
+    
+    hour_entry = Entry(time_container, font=("times new roman", 22), width=15)
+    hour_entry.pack(side=LEFT, padx=(10, 5))
+
+    Label(time_container, text=":", bg=bg_color, fg=fg_color, 
+          font=("times new roman", 22, 'bold')).pack(side=LEFT)
+
+    min_entry = Entry(time_container, font=("times new roman", 22), width=15)
+    min_entry.pack(side=LEFT, padx=5)
+    
+    Label(time_container, text="(HH:MM)",fg='red', bg=bg_color, font=("times new roman", 14, 'italic','bold')).pack(side=LEFT, padx=10)
+
+    # Problem
+    Label(book_frame, text="Problem", bg=bg_color, fg=fg_color, 
+          font=("times new roman", 22, 'bold')).grid(row=4, column=0, sticky="w", pady=10)
+    note_entry = Entry(book_frame, font=("times new roman", 22), width=45)
+    note_entry.grid(row=4, column=1, columnspan=3, pady=10, padx=10)
+
+    # --- BUTTON ---
+    # Adjusted columnspan to 4 to match the number of columns used above
     book_button = Button(book_frame,
-                      text="Book Appointment",
-                      bg=fg_color,
-                      fg="#FFFFFF",
-                      font=("times new roman", 25,'bold'),
-                      command=lambda: book(current_staff,patient_id_entry ,doc_id_entry, date_entry, note_entry)
-                      )
-    book_button.grid(row=4, column=0, columnspan=2, pady=30)
-
+                         text="Book Appointment",
+                         bg=fg_color, fg="#FFFFFF",
+                         font=("times new roman", 22, 'bold'),
+                         cursor="hand2",
+                         command=lambda: book(current_staff, patient_id_entry ,doc_id_entry, day_listbox, hour_entry, min_entry, note_entry)
+                         )
+    book_button.grid(row=5, column=0, columnspan=4, pady=(30, 10))
 
 
 # def view_f(current_staff):
@@ -629,7 +778,6 @@ def appointment_list_f(current_staff, pid):
 #         iiiii += 1
 
 
-from tkinter import *
 
 def bill_f(current_staff):
     global bill_frame

@@ -5,6 +5,7 @@ from patient import Patient
 from doctor import Doctor
 from Login_Window import open_login
 
+
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
 
@@ -117,7 +118,7 @@ def patient_signup_f():
     signup_frame.place(relx=0.5, rely=0.5, anchor="center")
 
     signup_label = Label(signup_frame,
-                    text="Sign Up",
+                    text="Patient Sign Up",
                     bg=bg_color,
                     fg=fg_color,
                     font=("times new roman", 50,'bold')

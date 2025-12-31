@@ -12,9 +12,14 @@ from staff import Staff
 from Staff_Window import open_staff
 
 
+
 bg_color = "#D3D3D3"
 fg_color = "#0026FF"
 
+def signup():
+    login_window.destroy()
+    from Signup_Window import open_signup
+    open_signup()
 
 def staff_login(username_entry, password_entry):
     username = username_entry.get()
@@ -95,8 +100,17 @@ def doctor_login_f():
                       font=("times new roman", 25,'bold'),
                       command=lambda: doctor_login(doc_id_entry)
                       )
-    login_button.grid(row=2, column=0, columnspan=2, pady=30)
-    
+    login_button.grid(row=2, column=0, pady=30)
+
+    signup_button = Button(login_frame,
+                      text="Sign_UP",
+                      bg=fg_color,
+                      fg="#FFFFFF",
+                      font=("times new roman", 25,'bold'),
+                      command=signup
+                      )
+    signup_button.grid(row=2, column=1, pady=30)
+
     return doc_id_entry
 
 
@@ -150,8 +164,17 @@ def page(tab,fun,type):
                       font=("times new roman", 25,'bold'),
                       command=lambda: fun(username_entry, password_entry)
                       )
-    login_button.grid(row=3, column=0, columnspan=2, pady=30)
+    login_button.grid(row=3, column=0, pady=30)
     
+    signup_button = Button(login_frame,
+                      text="Sign_UP",
+                      bg=fg_color,
+                      fg="#FFFFFF",
+                      font=("times new roman", 25,'bold'),
+                      command=signup
+                      )
+    signup_button.grid(row=3, column=1, pady=30)
+
     return username_entry, password_entry
 
 def open_login():
