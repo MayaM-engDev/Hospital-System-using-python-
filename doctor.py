@@ -39,7 +39,7 @@ class Doctor:
         for d in db.get_all_doctors():
             if d[0] == doctor_id:
                 print("✔ Login successful!")
-                return Doctor(d[0], d[1], d[2], age=None)
+                return Doctor(d[0], d[1], d[2])
         print("Doctor ID not found.")
         return None
     

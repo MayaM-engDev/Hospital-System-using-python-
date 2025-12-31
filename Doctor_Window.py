@@ -32,12 +32,12 @@ def profile_f(current_doctor):
     Label(profile_frame, text="ID:", bg=bg_color, fg=label_color, font=label_font).grid(row=0, column=2, sticky="e", padx=5, pady=10)
     Label(profile_frame, text=f"# {current_doctor.id}", bg=bg_color, fg=val_color, font=value_font).grid(row=0, column=3, sticky="w", padx=5, pady=10)
 
-    # Age and Specialty
-    Label(profile_frame, text="AGE:", bg=bg_color, fg=label_color, font=label_font).grid(row=1, column=0, sticky="e", padx=5, pady=10)
-    Label(profile_frame, text=f"{current_doctor.age} Years", bg=bg_color, fg=val_color, font=value_font).grid(row=1, column=1, sticky="w", padx=5, pady=10)
+#     # Age and Specialty
+#     Label(profile_frame, text="AGE:", bg=bg_color, fg=label_color, font=label_font).grid(row=1, column=0, sticky="e", padx=5, pady=10)
+#     Label(profile_frame, text=f"{current_doctor.age} Years", bg=bg_color, fg=val_color, font=value_font).grid(row=1, column=1, sticky="w", padx=5, pady=10)
 
-    Label(profile_frame, text="SPECIALTY:", bg=bg_color, fg=label_color, font=label_font).grid(row=1, column=2, sticky="e", padx=5, pady=10)
-    Label(profile_frame, text=current_doctor.specialty, bg=bg_color, fg=val_color, font=value_font).grid(row=1, column=3, sticky="w", padx=5, pady=10)
+    Label(profile_frame, text="SPECIALTY:", bg=bg_color, fg=label_color, font=label_font).grid(row=1, column=0,columnspan=2, sticky="e", padx=5, pady=10)
+    Label(profile_frame, text=current_doctor.specialty, bg=bg_color, fg=val_color, font=value_font).grid(row=1, column=2, columnspan=2, sticky="w", padx=5, pady=10)
 
     Button(profile_frame, text="Sign OUT", bg="#555555", fg="white", width=10,
            font=("times new roman", 20, 'bold'), cursor="hand2", command=signout).grid(row=0, column=4, rowspan= 2, padx=5, pady=10)
