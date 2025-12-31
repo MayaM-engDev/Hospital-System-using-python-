@@ -25,6 +25,18 @@ class Staff:
         
     # ===== ADD APPOINTMENT =====
     def add_appointment(self, patient_id, doctor_id, day, hour, minute, notes=""):
+        patient = db.fetch("SELECT id FROM Patients WHERE id=?",(patient_id)) 
+
+        if not patient:
+            print("❌ patient not found")
+            return None
+
+        doctor = db.fetch("SELECT id FROM Doctors WHERE id=?",(doctor_id)) 
+
+        if not doctor:
+            print("❌ Doctor not found")
+            return None
+
         if self.access_level not in [2, 3]:
             print("Access denied")
             return None 
