@@ -303,6 +303,11 @@ Once authentication is completed successfully, the user is redirected based on t
 
 14. The database ensures data persistence and consistency using SQLite,
     allowing the system to store and retrieve information efficiently.
+ ### screenshots GUI
+ ![GUI 1](https://github.com/user-attachments/assets/14e6208e-372c-477b-9663-6215084e0d36)
+![GUI2](https://github.com/user-attachments/assets/73866364-5d65-4a17-a88b-32b7f985df84)
+![GUI3](https://github.com/user-attachments/assets/887938e3-00f1-4d14-9b89-d15d2ee9beca)
+
 
 
 
