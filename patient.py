@@ -1,3 +1,5 @@
+import time
+from Staff_Window import patient_list_f
 from database import Database
 from bill import Bill
 
@@ -31,25 +33,48 @@ class Patient:
         print("❌ Invalid username or password")
         return None
 
-    @staticmethod
-    def age(age):
-            try:
-                age = int(input("Enter age: "))
-            except ValueError:
-                print("Invalid input for age. Please enter a number between 0 and 120.")
-                age = int(input("Enter age: "))
-
-            while not (0 <= age <= 120):
-                print("Invalid age. Please enter a number between 0 and 120.")
-                age = int(input("Enter age: "))
-
     def view_doctors(self):
         return db.get_all_doctors()
-    
 
-    def book_appointment(self, doctor_id, day, time, problem):
+    @staticmethod
+    def date():
+        print("1.Sunday \n2.Monday \n3.Tuesday \n4.Wednesday \n5.Thursday \n6.Friday \n7.Saturday")
+        day = input("Enter day: ")
+        if day not in ['1','2','3','4','5','6','7']:
+            print("Invalid day. Please enter a number between 1 and 7.")
+            return Patient.date()
+        else:
+            day_dict = {
+                '1': 'Sunday',
+                '2': 'Monday',
+                '3': 'Tuesday',
+                '4': 'Wednesday',
+                '5': 'Thursday',
+                '6': 'Friday',
+                '7': 'Saturday'
+            }
+            day = day_dict[day]
+            return day
+        
+
+    def book_appointment(self, doctor_id, day, hour, minuts, problem):
         self.problem = problem
         self.assigned_doctor = doctor_id
+        try:
+            hour = int(hour)
+            minuts = int(minuts)
+        except ValueError:
+            print("Invalid input for hour or Invalid input for minuts.\n Please enter a number between 0 and 23.\nPlease enter a number between 0 and 59.")  
+            return None
+        if not (0 <= int(hour) <= 23):
+            print("Invalid time entered. Please enter a valid hour (0-23).")
+            return None
+        if not (0 <= int(minuts) <= 59):
+            print("Invalid time entered. Please enter a valid minuts (0-59).")
+            return None
+
+        time = f"{hour}:{minuts}"
+
         db.execute(
             "UPDATE Patients SET problem=?, assigned_doctor=? WHERE id=?",
             (problem, doctor_id, self.id)
