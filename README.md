@@ -194,6 +194,114 @@ python main.py
 5. [Staff login()and view_appointments()](https://github.com/user-attachments/assets/66052bd7-d485-40af-8abd-1ae72548ebf6)
 6. [view_all_bills() and view_patients()](https://github.com/user-attachments/assets/1bf1d5c8-d9ca-4fb0-b9cc-036af495cc9f)
 
+## Runtime Flow
+
+1. When the program starts, the main execution window is created using Tkinter.
+
+2. A full-screen main window titled **"Hospital System"** appears.
+   This window acts as the entry point of the application.
+
+3. The main window displays two buttons:
+   - **LOG IN Page**
+   - **SIGN UP Page**
+
+4. If the user clicks **LOG IN Page**:
+   - The main window is closed.
+   - The system redirects the user to the login interface by calling the `open_login()` function.
+
+5. If the user clicks **SIGN UP Page**:
+   - The main window is closed.
+   - The system redirects the user to the signup interface by calling the `open_signup()` function.
+
+6. Each button triggers a specific function (`login()` or `signup()`),
+   ensuring clear navigation between system pages.
+
+7. This design allows the application to follow a structured and user-friendly flow,
+   where the user selects an action before accessing system functionalities.
+
+8. After selecting **Log In** or **Sign Up**, the system redirects the user to the authentication interface.
+Once authentication is completed successfully, the user is redirected based on their role.
+
+---
+
+### Patient Runtime Flow
+
+1. After logging in or signing up as a **Patient**, the patient main menu window is displayed.
+
+2. The patient menu provides the following options:
+   - View available doctors
+   - Book an appointment
+   - View my appointments
+   - Edit or delete appointments
+   - View bills
+   - Pay bills
+   - Log out
+
+3. When the patient selects an option:
+   - Viewing doctors retrieves doctor data from the database.
+   - Booking an appointment allows the patient to select a doctor and date.
+   - Viewing appointments displays all appointments related to the patient.
+   - Viewing bills shows all unpaid and paid bills.
+   - Paying a bill updates the payment status in the database.
+
+4. Each action is handled by the corresponding patient-related function
+   (such as `view_doctors()`, `book_appointment()`, and `pay_bill()`).
+
+---
+
+###  Doctor Runtime Flow
+
+5. After logging in as a **Doctor**, the doctor dashboard window appears.
+
+6. The doctor menu includes the following options:
+   - View assigned patients
+   - View appointments
+   - View personal profile
+   - Log out
+
+7. When a doctor selects an option:
+   - Viewing assigned patients displays patients linked to the doctor.
+   - Viewing appointments shows the doctor’s scheduled appointments.
+   - Viewing the profile displays doctor information stored in the system.
+
+8. These actions are managed through doctor-specific functions
+   (such as `view_assigned_patients()` and `view_appointments()`).
+
+---
+
+###  Staff Runtime Flow
+
+9. After logging in as **Staff**, the administrative control panel is displayed.
+
+10. The staff menu provides administrative options including:
+    - Add a new patient
+    - Update patient information
+    - Delete a patient
+    - Register appointments offline
+    - View all bills
+    - View paid bills
+    - View total paid amount
+    - Log out
+
+11. Each selected option performs a database operation such as inserting,
+    updating, or deleting records.
+
+12. Staff actions are handled using staff-related functions
+    (such as `add_patient()`, `update_patient()`, and `view_all_bills()`).
+
+---
+
+### Database Interaction
+
+13. All user actions across Patient, Doctor, and Staff roles are connected to
+    the database layer (`Database.py`).
+
+14. The database ensures data persistence and consistency using SQLite,
+    allowing the system to store and retrieve information efficiently.
+
+
+
+
 
 
 
