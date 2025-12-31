@@ -291,7 +291,7 @@ Once authentication is completed successfully, the user is redirected based on t
 
 ---
 
-### Database Interaction
+### Database Interaction:
 
 13. All user actions across Patient, Doctor, and Staff roles are connected to
     the database layer (`Database.py`).
