@@ -11,7 +11,7 @@ class Staff:
         self.gender = gender
         self.role = role
         self.access_level = access_level
-        self.db = Database()  # استخدم قاعدة البيانات
+        self.db = Database()  
     @staticmethod
     def login(username, password):
         data = db.fetch("SELECT * FROM Staff WHERE username=? AND password=?", (username, password))
@@ -22,6 +22,7 @@ class Staff:
         else:
             print("❌ Invalid username or password")
             return None
+        
     # ===== ADD APPOINTMENT =====
     def add_appointment(self, patient_id, doctor_id, date, notes=""):
         if self.access_level not in [2, 3]:
@@ -55,6 +56,10 @@ class Staff:
         if self.access_level != 3:
             print("Access denied")
             return
+        patient = self.db.execute("SELECT id FROM Patients WHERE id=?", (patient_id,), fetchone=True)
+        if not patient:
+                print("❌ Patient not found, nothing to delete")
+                return
         # delete patient's appointments and bills
         appointments = self.db.get_patient_appointments(patient_id)
         for app in appointments:
@@ -62,7 +67,7 @@ class Staff:
         # delete patient
         self.db.execute("DELETE FROM Patients WHERE id=?", (patient_id,))
         print(f"✔ Patient {patient_id} and related appointments deleted")
-
+        
     # ===== VIEW PATIENTS =====
     def view_patients(self):
         return self.db.fetch("SELECT * FROM Patients")
