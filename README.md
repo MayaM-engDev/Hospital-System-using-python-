@@ -166,3 +166,42 @@ Staff_window.py
 
 ### Bills Table
 (patient_id, appointment_id, total_cost, payment_status)
+
+## implementation 
+### how to run 
+1. Install **Python 3**.
+2. Open the project folder.
+3. Run the following command:
+```bash
+python main.py
+```
+### screenshot
+1)Program Execution and User Interaction
+
+## implementation 
+### how to run 
+1. Install **Python 3**.
+2. Open the project folder.
+3. Run the following command:
+```bash
+python main.py
+```
+### screenshot
+1. [Program Execution and User Interaction](https://github.com/user-attachments/assets/9f056f99-6165-4e09-806e-41569d81b570)
+2. [Patient Menu – Viewing Doctors and Booking an Appointment ](https://github.com/user-attachments/assets/dba2c685-162f-48f9-993c-1120f7256492)
+3. [Patient Appointment and Billing Execution](https://github.com/user-attachments/assets/218213dc-69f5-47b7-87fe-7e13514c6ddc)
+4. [Doctor Login and Patient Management Execution](https://github.com/user-attachments/assets/92416a7a-705c-4865-9425-55a37ff20bcb)
+5. [Staff login()and view_appointments()](https://github.com/user-attachments/assets/66052bd7-d485-40af-8abd-1ae72548ebf6)
+6. [view_all_bills() and view_patients()](https://github.com/user-attachments/assets/1bf1d5c8-d9ca-4fb0-b9cc-036af495cc9f)
+
+
+
+
+
+
+
+
+
+
+
+
